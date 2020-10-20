@@ -6,9 +6,8 @@
     "postinstall": "node scripts/replace-relative-path-syncfusion.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --mode production",
-    "build-dev1": "vue-cli-service build --mode dev1",
-    "build-dev2": "vue-cli-service build --mode dev2",
     "build-test": "vue-cli-service build --mode test",
+    "build-development": "vue-cli-service build --mode development",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
