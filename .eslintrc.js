@@ -1,4 +1,8 @@
 module.exports = {
+  globals: {
+    moment: "readonly",
+    SP: "readonly"
+  },
   root: true,
   env: {
     node: true
@@ -15,7 +19,20 @@ module.exports = {
   },
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "prettier/prettier": [
+      "error",
+      {
+        singleQuote: false,
+        semi: false,
+        trailingComma: "none",
+        code: 350,
+        printWidth: 350,
+        ignoreComments: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true
+      }
+    ]
   },
   overrides: [
     {

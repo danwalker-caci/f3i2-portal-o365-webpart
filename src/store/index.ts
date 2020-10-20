@@ -1,11 +1,17 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from "vue"
+import Vuex from "vuex"
+// import Notification from './modules/notification'
+// import User from './modules/user'
+import support from "./modules/support"
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
-});
+Vue.config.devtools = true
+
+const store = new Vuex.Store({
+  modules: {
+    support
+  }
+})
+
+export default store
