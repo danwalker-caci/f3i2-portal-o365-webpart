@@ -30,6 +30,7 @@
     "@syncfusion/ej2-vue-richtexteditor": "^18.3.42",
     "@syncfusion/ej2-vue-schedule": "^18.3.42",
     "@syncfusion/ej2-vue-spreadsheet": "^18.3.42",
+    "@types/sharepoint": "^2016.1.8",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.18.0",

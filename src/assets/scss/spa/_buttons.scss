@@ -20,7 +20,7 @@
   @include transition($btn-transition);
 
   @include hover() {
-    color: $body-color;
+    color: $warning;
     text-decoration: none;
   }
 

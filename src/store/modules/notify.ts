@@ -1,34 +1,31 @@
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators"
+import { Notification } from "@/interfaces/Notification"
 
 let nextId = 1
 
-interface Notification {
-  id: number
-  type: string
-  title: string
-  message: string
-}
-
-@Module({ namespaced: true, name: "notification" })
-export default class Notify extends VuexModule {
-  notifications: Notification[] = []
+@Module({ namespaced: true })
+class Notify extends VuexModule {
+  public notifications: Array<Notification> = []
   @Mutation
-  public addNotification(notification: any): void {
+  public addNotification(notification: Notification): void {
     this.notifications.push({
       ...notification,
       id: nextId++
     })
   }
   @Mutation
-  public deleteNotification(notificationToRemove: any): void {
+  public deleteNotification(notificationToRemove: Notification): void {
     this.notifications = this.notifications.filter(notification => notification.id !== notificationToRemove.id)
   }
   @Action
-  public add(notification: any) {
+  public add(notification: Notification): void {
+    console.log("Adding Notification")
     this.context.commit("addNotification", notification)
   }
   @Action
-  public delete(notificationToRemove: any) {
+  public delete(notificationToRemove: Notification) {
     this.context.commit("deleteNotification", notificationToRemove)
   }
 }
+
+export default Notify

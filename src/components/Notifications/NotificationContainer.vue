@@ -1,19 +1,26 @@
 <template>
   <div class="notification-container">
-    <Notification v-for="notification in notifications" :key="notification.id" :notification="notification" />
+    <NotificationBar v-for="notification in notifications" :key="notification.id" :notification="notification" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import Notification from "./Notification.vue";
+import { Component, Vue } from "vue-property-decorator"
+import { namespace } from "vuex-class"
+import { Notification } from "@/interfaces/Notification"
+import NotificationBar from "./NotificationBar.vue"
+
+const notify = namespace("notify")
 
 @Component({
   components: {
-    Notification
+    NotificationBar
   }
 })
-export default class NotificationContainer extends Vue {}
+export default class NotificationContainer extends Vue {
+  @notify.State
+  public notifications!: Array<Notification>
+}
 </script>
 
 <style scoped>

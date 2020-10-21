@@ -456,12 +456,11 @@
 .main-panel{
   /* background: #ffffff; */
   position: relative;
-  float: right;
-  width: $sidebar-width;
+  width: 100%;
 
   .content{
     /* padding: 30px 15px; */
-    height: calc(100vh - 90px);
+    height: calc(100vh - 100px);
     overflow-y: auto;
     background: transparent;
   }
@@ -470,9 +469,6 @@
     border-top: 1px solid #000000;
   } */
 
-  .navbar{
-    margin-bottom: 0;
-  }
 }
 
 

@@ -1,7 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
-// import Notification from './modules/notification'
-// import User from './modules/user'
+import notify from "./modules/notify"
+import users from "./modules/users"
 import support from "./modules/support"
 
 Vue.use(Vuex)
@@ -10,7 +10,9 @@ Vue.config.devtools = true
 
 const store = new Vuex.Store({
   modules: {
-    support
+    support,
+    notify,
+    users
   }
 })
 

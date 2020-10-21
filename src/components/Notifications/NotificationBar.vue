@@ -10,26 +10,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { namespace } from "vuex-class";
-const notification = namespace("notification");
+import { Component, Prop, Vue } from "vue-property-decorator"
+import { Notification } from "@/interfaces/Notification"
+import { namespace } from "vuex-class"
+const notify = namespace("notify")
 
 @Component
 export default class NotificationBar extends Vue {
-  @notification.Action
-  public remove!: (notificationToRemove: Notification) => void;
+  @notify.Action
+  public remove!: (notificationToRemove: Notification) => void
 
   @Prop()
-  public notification!: Notification;
+  public notification!: Notification
 
-  private timeout!: number;
+  private timeout!: number
 
   mounted() {
-    this.timeout = setTimeout(() => this.remove(this.notification), 8000);
+    this.timeout = setTimeout(() => this.remove(this.notification), 6000)
   }
 
   beforeDestroy() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout)
   }
 }
 </script>

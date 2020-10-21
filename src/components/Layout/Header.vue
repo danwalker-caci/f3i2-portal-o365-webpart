@@ -41,32 +41,24 @@
                 </b-tr>
               </b-tbody>
             </b-table-simple>
-          </b-nav-item-dropdown>
+          </b-nav-item-dropdown> -->
           <b-nav-item-dropdown id="SettingsMenu" right no-caret menu-class="animated bounceInDown">
             <template slot="button-content">
               <font-awesome-icon fas icon="cog" class="cog"></font-awesome-icon>
             </template>
-            <b-dropdown-item
-              v-if="isDeveloper"
-              href="#"
-              onclick="javascript:if (LaunchCreateHandler('PublishingPage')) { SP.SOD.executeFunc('sp.ui.dialog.js', 'SP.UI.ModalDialog.showModalDialog', function() { var dlgOptions = { url:'\u002fsites\u002ff3i2\u002f_layouts\u002f15\u002fCreatePublishingPageDialog.aspx', autoSize: true, autoSizeStartWidth: 550 };  SP.UI.ModalDialog.showModalDialog(dlgOptions); }); };"
-            >
+            <b-dropdown-item v-if="isDeveloper" href="#" onclick='javascript:SuiteOnClick("GoToCreateNewPage\u0028\u0029")'>
               <div class="row">
                 <font-awesome-icon far icon="file-alt" class="icon"></font-awesome-icon>
                 <span>Add a page</span>
               </div>
             </b-dropdown-item>
-            <b-dropdown-item
-              v-if="isDeveloper"
-              href="#"
-              onclick="javascript:SP.SOD.executeFunc('sp.ui.pub.ribbon.js', 'Pub.Ribbon.PubCommands', function() {Pub.Ribbon.PubCommands.notifyProgress(SP.Publishing.Resources.notificationMessageLoading);if (document.forms['aspnetForm']['MSOLayout_InDesignMode'] != null) document.forms['aspnetForm']['MSOLayout_InDesignMode'].value = 1;if (document.forms['aspnetForm']['MSOAuthoringConsole_FormContext'] != null) document.forms['aspnetForm']['MSOAuthoringConsole_FormContext'].value = 1;if (document.forms['aspnetForm']['MSOSPWebPartManager_DisplayModeName'] != null) document.forms['aspnetForm']['MSOSPWebPartManager_DisplayModeName'].value = 'Design';__doPostBack('ctl05','edit')});"
-            >
+            <b-dropdown-item v-if="isDeveloper" href="#" onclick='javascript:SuiteOnClick("window.location = \u0027javascript:ChangeLayoutMode\u0028false\u0029;\u0027;")'>
               <div class="row">
                 <font-awesome-icon far icon="edit" class="icon"></font-awesome-icon>
                 <span>Edit page</span>
               </div>
             </b-dropdown-item>
-            <b-dropdown-item v-if="isDeveloper" href="#" onclick="GoToPage('\u002fsites\u002ff3i2\u002f_layouts\u002f15\u002faddanapp.aspx');">
+            <b-dropdown-item v-if="isDeveloper" href="#" onclick='javascript:SuiteOnClick("GoToPage\u0028\u0027\\u002fsites\\u002fF3I2\\u002f_layouts\\u002f15\\u002faddanapp.aspx\u0027\u0029")'>
               <div class="row">
                 <font-awesome-icon far icon="plus-square" class="icon"></font-awesome-icon>
                 <span>Add an app</span>
@@ -78,13 +70,13 @@
                 <span>Design Manager</span>
               </div>
             </b-dropdown-item>
-            <b-dropdown-item v-if="isDeveloper" href="#" onclick="STSNavigate2(event,'/sites/f3i2/_layouts/15/viewlsts.aspx');">
+            <b-dropdown-item v-if="isDeveloper" href="#" onclick='javascript:SuiteOnClick("STSNavigate2\u0028event,\u0027\u002fsites\u002fF3I2\u002f_layouts\u002f15\u002fviewlsts.aspx\u0027\u0029;")'>
               <div class="row">
                 <font-awesome-icon fas icon="box-open" class="icon"></font-awesome-icon>
                 <span>Site contents</span>
               </div>
             </b-dropdown-item>
-            <b-dropdown-item v-if="isDeveloper" href="#" onclick="GoToPage('\u002fsites\u002ff3i2\u002f_layouts\u002f15\u002fsettings.aspx');">
+            <b-dropdown-item v-if="isDeveloper" href="#" onclick='javascript:SuiteOnClick("GoToPage\u0028\u0027\\u002fsites\\u002fF3I2\\u002f_layouts\\u002f15\\u002fsettings.aspx\u0027\u0029")'>
               <div class="row">
                 <font-awesome-icon fas icon="cogs" class="icon"></font-awesome-icon>
                 <span>Site settings</span>
@@ -92,11 +84,12 @@
             </b-dropdown-item>
             <b-dropdown-item href="#" @click="ShowActivityLog">
               <div class="row">
-                <font-awesome-icon fas icon="clipbaord-list" class="icon"></font-awesome-icon>
+                <font-awesome-icon fas icon="clipboard-list" class="icon"></font-awesome-icon>
                 <span>Show Activity Log</span>
               </div>
             </b-dropdown-item>
-          </b-nav-item-dropdown> -->
+          </b-nav-item-dropdown>
+          -->
         </b-navbar-nav>
       </div>
     </div>
@@ -120,6 +113,10 @@ export default class Header extends Vue {
 
   toggler() {
     this.setShown(!this.isShown)
+  }
+
+  public ShowActivityLog(): void {
+    /* Show Activity Log */
   }
 }
 </script>

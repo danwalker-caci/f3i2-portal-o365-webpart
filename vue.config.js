@@ -5,7 +5,6 @@ module.exports = {
 
   assetsDir: "static",
   publicPath: process.env.BASE_URL,
-
   configureWebpack: {
     optimization: {
       splitChunks: {
@@ -23,5 +22,6 @@ module.exports = {
   },
 
   filenameHashing: true,
-  runtimeCompiler: true
+  runtimeCompiler: true,
+  productionSourceMap: false
 }
