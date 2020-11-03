@@ -10,7 +10,10 @@
         </b-container>
       </b-modal> -->
       <div class="navbar-minimize">
-        <button class="btn btn-outline btn-fill btn-round btn-icon d-none d-lg-block btn-burger" :class="isShown === true ? ' sidebarOpen' : 'sidebarClosed'" @click.prevent="toggler">
+        <!-- <button class="btn btn-outline btn-fill btn-round btn-icon d-none d-lg-block btn-burger" :class="isShown === true ? ' sidebarOpen' : 'sidebarClosed'" @click.prevent="toggler">
+          <font-awesome-icon fas :icon="isShown === true ? 'ellipsis-v' : 'bars'" class="icon"></font-awesome-icon>
+        </button> -->
+        <button class="btn btn-outline btn-fill btn-round btn-icon d-none d-lg-block btn-burger" @click.prevent="toggler">
           <font-awesome-icon fas :icon="isShown === true ? 'ellipsis-v' : 'bars'" class="icon"></font-awesome-icon>
         </button>
       </div>
@@ -89,7 +92,6 @@
               </div>
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          -->
         </b-navbar-nav>
       </div>
     </div>
@@ -121,12 +123,4 @@ export default class Header extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.sidebarOpen {
-  margin-left: 310px !important;
-}
-
-.sidebarClosed {
-  margin-left: 10px;
-}
-</style>
+<style lang="scss"></style>

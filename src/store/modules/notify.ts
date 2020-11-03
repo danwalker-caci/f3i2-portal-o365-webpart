@@ -19,7 +19,6 @@ class Notify extends VuexModule {
   }
   @Action
   public add(notification: Notification): void {
-    console.log("Adding Notification")
     this.context.commit("addNotification", notification)
   }
   @Action

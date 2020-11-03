@@ -3,6 +3,8 @@ import Vuex from "vuex"
 import notify from "./modules/notify"
 import users from "./modules/users"
 import support from "./modules/support"
+import sidebar from "./modules/sidebar"
+import workplan from "./modules/workplan"
 
 Vue.use(Vuex)
 
@@ -12,7 +14,9 @@ const store = new Vuex.Store({
   modules: {
     support,
     notify,
-    users
+    users,
+    sidebar,
+    workplan
   }
 })
 

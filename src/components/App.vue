@@ -5,6 +5,104 @@
   </div>
 </template>
 
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator"
+import { namespace } from "vuex-class"
+import { User } from "@/interfaces/User"
+import { Notification } from "@/interfaces/Notification"
+
+const users = namespace("users")
+const notify = namespace("notify")
+const workplan = namespace("workplan")
+
+@Component
+export default class App extends Vue {
+  public userid!: number
+
+  @notify.Action
+  public add!: (notification: Notification) => void
+
+  @users.Action
+  public getUserId!: () => Promise<User>
+
+  @users.Action
+  public getUserProfile!: () => Promise<boolean>
+
+  @users.Action
+  public getUserPermissions!: (id: number) => Promise<User>
+
+  @workplan.Action
+  public getWorkplans!: () => Promise<boolean>
+
+  created() {
+    console.log("APP CREATED")
+    this.getUserId().then(response => {
+      this.userid = response.userid
+      this.getUserProfile().then(response => {
+        if (response === true) {
+          this.getUserPermissions(this.userid).then(response => {
+            if (response) {
+              console.log("User Loaded: " + response.DisplayName)
+              this.getWorkplans().then(response => {
+                if (response) {
+                  // TODO: Get Personnel and Companies
+                } else {
+                  const notification: Notification = {
+                    id: 0,
+                    type: "danger",
+                    title: "Error",
+                    message: "Could not load Workplans."
+                  }
+                  this.add(notification)
+                }
+              })
+            } else {
+              console.log("Error getting user permissions.")
+            }
+          })
+        } else {
+          console.log("Error getting user profile.")
+        }
+      })
+    })
+  }
+
+  mounted() {
+    console.log("APP MOUNTED")
+    /* this.getUserId().then(response => {
+      this.userid = response.userid
+      this.getUserProfile().then(response => {
+        if (response === true) {
+          this.getUserPermissions(this.userid).then(response => {
+            if (response) {
+              this.loaded = true
+              console.log("User Loaded: " + response.DisplayName)
+              this.getWorkplans().then(response => {
+                if (response) {
+                  // TODO: Get Personnel and Companies
+                } else {
+                  const notification: Notification = {
+                    id: 0,
+                    type: "danger",
+                    title: "Error",
+                    message: "Could not load Workplans."
+                  }
+                  this.add(notification)
+                }
+              })
+            } else {
+              console.log("Error getting user permissions.")
+            }
+          })
+        } else {
+          console.log("Error getting user profile.")
+        }
+      })
+    }) */
+  }
+}
+</script>
+
 <style lang="scss">
 @import "../assets/scss/portal.scss";
 

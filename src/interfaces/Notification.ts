@@ -4,5 +4,4 @@ interface Notification {
   title: string
   message: string
 }
-
 export { Notification }

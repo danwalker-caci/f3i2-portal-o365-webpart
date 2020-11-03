@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
     <NotificationContainer />
-    <b-sidebar v-model="isShown" no-header bg-variant="black" text-variant="white">
+    <b-sidebar no-slide no-close-on-route-change v-model="isShown" no-header bg-variant="black" text-variant="white">
       <template v-slot:default>
-        NAVIGATION HERE
+        <Sidebar v-if="loaded"></Sidebar>
       </template>
       <template v-slot:footer>
         <div class="d-flex bg-black text-white align-items-center p-1">
@@ -15,7 +15,7 @@
         </div>
       </template>
     </b-sidebar>
-    <div class="main-panel">
+    <div class="main-panel" :class="isShown === true ? ' sidebarOpen' : 'sidebarClosed'">
       <Header />
       <Content />
       <Footer />
@@ -32,6 +32,7 @@ import { User } from "@/interfaces/User"
 import Header from "./Header.vue"
 import Footer from "./Footer.vue"
 import Content from "./Content.vue"
+import Sidebar from "./Sidebar.vue"
 import NotificationContainer from "../Notifications/NotificationContainer.vue"
 
 const support = namespace("support")
@@ -39,7 +40,9 @@ const notify = namespace("notify")
 const users = namespace("users")
 
 @Component({
+  name: "Layout",
   components: {
+    Sidebar,
     Header,
     Footer,
     Content,
@@ -47,12 +50,8 @@ const users = namespace("users")
   }
 })
 export default class Layout extends Vue {
-  // TODO: convert to prop to control from other components using the store.
   @users.State
-  public currentUser!: Array<User>
-
-  @users.Action
-  public getUserId!: () => void
+  public loaded!: boolean
 
   @support.State
   public isShown!: boolean
@@ -61,10 +60,6 @@ export default class Layout extends Vue {
   public add!: (notification: Notification) => void
 
   mounted() {
-    if (console) {
-      console.log("Layout Mounted")
-    }
-    this.getUserId()
     const notification: Notification = {
       id: 0,
       type: "success",
@@ -72,10 +67,21 @@ export default class Layout extends Vue {
       message: "F3I2 Portal Loaded."
     }
     this.add(notification)
+    console.log("LAYOUT MOUNTED")
   }
 }
 </script>
 
 <style lang="scss" scoped>
-/* Styles */
+.sidebarOpen {
+  margin-left: 310px !important;
+}
+
+.main-panel .sidebarOpen {
+  width: calc(100vw - 310px);
+}
+
+.sidebarClosed {
+  margin-left: 0px;
+}
 </style>

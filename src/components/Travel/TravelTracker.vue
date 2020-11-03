@@ -6,7 +6,7 @@
 import { Component, Vue } from "vue-property-decorator"
 
 @Component
-export default class Personnel extends Vue {}
+export default class TravelTracker extends Vue {}
 </script>
 
 <style scoped></style>

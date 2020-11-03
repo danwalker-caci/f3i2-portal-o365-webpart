@@ -7,10 +7,11 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Component, Prop, Vue } from "vue-property-decorator"
+import { Component, Vue } from "vue-property-decorator"
 
-@Component
+@Component({
+  name: "Content"
+})
 export default class Content extends Vue {}
 </script>
 

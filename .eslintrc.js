@@ -15,6 +15,7 @@ module.exports = {
     "@vue/prettier/@typescript-eslint",
   ],
   parserOptions: {
+    parser: "@typescript-eslint/parser",
     ecmaVersion: 2020,
   },
   rules: {
@@ -25,6 +26,7 @@ module.exports = {
       "error",
       {
         singleQuote: false,
+        doubleQuote: true,
         semi: false,
         trailingComma: "none",
         code: 350,

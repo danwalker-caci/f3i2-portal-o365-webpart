@@ -21,6 +21,76 @@ const routes: Array<RouteConfig> = [
         component: Dashboard
       }
     ]
+  },
+  {
+    path: "/admin",
+    component: Layout,
+    redirect: "/admin/home",
+    children: [
+      {
+        path: "home/:mode",
+        name: "Admin",
+        component: () => import(/* webpackChunkName: "admin" */ "../components/Admin/Admin.vue"),
+        props: true
+      }
+    ]
+  },
+  {
+    path: "/travel",
+    component: Layout,
+    redirect: "/travel/home",
+    children: [
+      {
+        path: "home/:mode",
+        name: "Travel",
+        component: () => import(/* webpackChunkName: "travel" */ "../components/Travel/TravelTracker.vue"),
+        props: true
+      }
+    ]
+  },
+  {
+    path: "/personnel",
+    component: Layout,
+    redirect: "/personnel/home",
+    children: [
+      {
+        path: "home/reports/:mode",
+        name: "Reports",
+        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/Personnel.vue"),
+        props: true
+      },
+      {
+        path: "home/refresh/:mode",
+        name: "Personnel",
+        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/Personnel.vue"),
+        props: true
+      },
+      {
+        path: "home/new/:mode",
+        name: "Onboarding",
+        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/Personnel.vue"),
+        props: true
+      }
+    ]
+  },
+  {
+    path: "/workplans",
+    component: Layout,
+    redirect: "/workplans/home",
+    children: [
+      {
+        path: "home/active",
+        name: "Work Plans",
+        component: () => import(/* webpackChunkName: "workplan" */ "../components/Workplans/Workplan.vue"),
+        props: true
+      },
+      {
+        path: "home/manning",
+        name: "Manning Report",
+        component: () => import(/* webpackChunkName: "workplan" */ "../components/Workplans/Manning.vue"),
+        props: true
+      }
+    ]
   }
 ]
 

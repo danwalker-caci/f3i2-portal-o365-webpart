@@ -18,7 +18,6 @@ interface User {
   isAFRL?: boolean
   isAFRLCEU?: boolean
   Account?: string
-  PictureUrl?: string
   PersonalUrl?: string
   Email?: string
   EmailLink?: string
@@ -32,5 +31,4 @@ interface User {
   Company?: string
   WPData?: string
 }
-
 export { User }

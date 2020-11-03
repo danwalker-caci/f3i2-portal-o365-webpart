@@ -26,6 +26,9 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 library.add(far, fas)
 dom.watch()
 
+import jquery from "jquery"
+Object.defineProperty(Vue.prototype, "$jQuery", { value: jquery })
+
 Vue.component("font-awesome-icon", FontAwesomeIcon)
 Vue.use(VueMoment, {
   moment

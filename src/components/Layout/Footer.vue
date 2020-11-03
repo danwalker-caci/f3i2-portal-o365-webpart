@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="container-fluid d-flex flex-wrap justify-content-between">
       <nav>
-        <ul class="footer-menu" :class="isShown === true ? ' sidebarOpen' : 'sidebarClosed'">
+        <ul class="footer-menu">
           <li>
             <router-link :to="{ path: '/pages/home' }">Home</router-link>
           </li>
@@ -27,11 +27,11 @@ export default class Footer extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.sidebarOpen {
+/* .sidebarOpen {
   margin-left: 310px !important;
 }
 
 .sidebarClosed {
   margin-left: 10px;
-}
+} */
 </style>
