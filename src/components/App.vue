@@ -35,14 +35,12 @@ export default class App extends Vue {
   public getWorkplans!: () => Promise<boolean>
 
   created() {
-    console.log("APP CREATED")
     this.getUserId().then(response => {
       this.userid = response.userid
       this.getUserProfile().then(response => {
         if (response === true) {
           this.getUserPermissions(this.userid).then(response => {
             if (response) {
-              console.log("User Loaded: " + response.DisplayName)
               this.getWorkplans().then(response => {
                 if (response) {
                   // TODO: Get Personnel and Companies
@@ -65,40 +63,6 @@ export default class App extends Vue {
         }
       })
     })
-  }
-
-  mounted() {
-    console.log("APP MOUNTED")
-    /* this.getUserId().then(response => {
-      this.userid = response.userid
-      this.getUserProfile().then(response => {
-        if (response === true) {
-          this.getUserPermissions(this.userid).then(response => {
-            if (response) {
-              this.loaded = true
-              console.log("User Loaded: " + response.DisplayName)
-              this.getWorkplans().then(response => {
-                if (response) {
-                  // TODO: Get Personnel and Companies
-                } else {
-                  const notification: Notification = {
-                    id: 0,
-                    type: "danger",
-                    title: "Error",
-                    message: "Could not load Workplans."
-                  }
-                  this.add(notification)
-                }
-              })
-            } else {
-              console.log("Error getting user permissions.")
-            }
-          })
-        } else {
-          console.log("Error getting user profile.")
-        }
-      })
-    }) */
   }
 }
 </script>

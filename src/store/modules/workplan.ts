@@ -6,7 +6,8 @@ import axios from "axios"
 import moment from "moment"
 
 declare const _spPageContextInfo: any
-const baseUrl = _spPageContextInfo.webServerRelativeUrl
+const baseUrl = _spPageContextInfo.webAbsoluteUrl
+let url = baseUrl + "/_api/lists/getbytitle('WorkPlans')/items"
 let geturl = baseUrl + "/_api/lists/getbytitle('WorkPlans')/items"
 geturl += "?$select=*,Manager/Title,Manager/ID,Manager/Name,Manager/EMail&$expand=Manager"
 geturl += "&$filter=(Archived eq 0)"
@@ -15,7 +16,7 @@ const murl = baseUrl + "/_api/Web/SiteGroups/GetByName('Workplan Managers')/user
 @Module({ namespaced: true })
 class WorkPlan extends VuexModule {
   // #region  STATE
-  public digest = ""
+  public digest?: string = ""
   public loaded = false
   public managers: any = []
   public dropdown: any = []
@@ -56,6 +57,9 @@ class WorkPlan extends VuexModule {
   // #endregion GETTERS
 
   //#region MUTATIONS
+  @Mutation updateLoaded(loaded: boolean): void {
+    this.loaded = loaded
+  }
   @Mutation updateDigest(digest: string): void {
     this.digest = digest
   }
@@ -80,9 +84,10 @@ class WorkPlan extends VuexModule {
   //#region ACTIONS
   @Action
   public async getDigest(): Promise<boolean> {
+    console.log("getDigest baseUrl: " + baseUrl)
     const response = await axios.request({
       url: baseUrl + "/_api/contextinfo",
-      method: "post",
+      method: "POST",
       headers: { Accept: "application/json; odata=verbose" }
     })
     this.context.commit("updateDigest", response.data.d.GetContextWebInformation.FormDigestValue)
@@ -110,6 +115,7 @@ class WorkPlan extends VuexModule {
 
   @Action
   public async getWorkplans(): Promise<boolean> {
+    this.context.commit("updateLoaded", false)
     let allWorkPlans: any[] = []
     const p: Array<WorkPlanItem> = []
     const q: Array<any> = []
@@ -160,12 +166,13 @@ class WorkPlan extends VuexModule {
     getAllWorkPlans("")
     this.context.commit("updateWorkplans", p)
     this.context.commit("updateDropdown", q)
+    this.context.commit("updateLoaded", true)
     return true
   }
 
   @Action
   public async editWorkplan(payload: any) {
-    const url = payload.uri
+    url = payload.uri
     const headers = {
       "Content-Type": "application/json;odata=verbose",
       Accept: "application/json;odata=verbose",
@@ -173,6 +180,7 @@ class WorkPlan extends VuexModule {
       "X-HTTP-Method": "MERGE",
       "If-Match": payload.etag
     }
+
     const config = {
       headers: headers
     }
@@ -181,6 +189,10 @@ class WorkPlan extends VuexModule {
       Title: payload.Title,
       Number: payload.Number,
       Revision: payload.Revision,
+      //POPStart: payload.POPStart !== undefined || payload.POPStart !== "" ? new Date(payload.POPStart) : null,
+      //POPEnd: payload.POPEnd !== undefined || payload.POPEnd !== "" ? new Date(payload.POPEnd) : null,
+      //DateApproved: payload.DateApproved !== undefined || payload.DateApproved !== "" ? new Date(payload.DateApproved) : null,
+      ManagerId: Number(payload.Manager),
       POPStart: moment(payload.POPStart).isValid()
         ? moment(payload.POPStart)
             .add(6, "hours")
@@ -195,53 +207,97 @@ class WorkPlan extends VuexModule {
         ? moment(payload.DateApproved)
             .add(6, "hours")
             .format("YYYY-MM-DD[T]HH:MM:[00Z]")
+        : null
+      // ManagerId: Number(payload.ManagerId)
+    }
+
+    try {
+      console.log("POST URL: " + url)
+      await axios.post(url, itemprops, config)
+      return true
+    } catch (error) {
+      console.log("WorkplanService Error Updating Workplan: " + error)
+    }
+  }
+
+  @Action
+  public async newWorkplan(payload: any) {
+    const headers = {
+      "Content-Type": "application/json;odata=verbose",
+      Accept: "application/json;odata=verbose",
+      "X-RequestDigest": this.digest,
+      "X-HTTP-Method": "POST"
+    }
+
+    const config = {
+      headers: headers
+    }
+
+    const itemprops = {
+      __metadata: { type: "SP.Data.WorkPlansListItem" },
+      Title: payload.Title,
+      Number: payload.Number,
+      Revision: payload.Revision,
+      //POPStart: payload.POPStart !== undefined || payload.POPStart !== "" ? new Date(payload.POPStart) : null,
+      //POPEnd: payload.POPEnd !== undefined || payload.POPEnd !== "" ? new Date(payload.POPEnd) : null,
+      //DateApproved: payload.DateApproved !== undefined || payload.DateApproved !== "" ? new Date(payload.DateApproved) : null,
+      ManagerId: Number(payload.Manager),
+      POPStart: moment(payload.POPStart).isValid()
+        ? moment(payload.POPStart)
+            .add(6, "hours")
+            .format("YYYY-MM-DD[T]HH:MM:[00Z]")
         : null,
-      ManagerId: Number(payload.Manager)
+      POPEnd: moment(payload.POPEnd).isValid()
+        ? moment(payload.POPEnd)
+            .add(6, "hours")
+            .format("YYYY-MM-DD[T]HH:MM:[00Z]")
+        : null,
+      DateApproved: moment(payload.DateApproved).isValid()
+        ? moment(payload.DateApproved)
+            .add(6, "hours")
+            .format("YYYY-MM-DD[T]HH:MM:[00Z]")
+        : null
+      // ManagerId: Number(payload.ManagerId)
+    }
+
+    try {
+      console.log("POST URL: " + url)
+      await axios.post(url, itemprops, config)
+      return true
+    } catch (error) {
+      console.log("WorkplanService Error Updating Workplan: " + error)
+    }
+  }
+
+  @Action
+  public async archive(payload: any) {
+    const url = payload.uri
+    const headers = {
+      "Content-Type": "application/json;odata=verbose",
+      Accept: "application/json;odata=verbose",
+      "X-RequestDigest": this.digest,
+      "X-HTTP-Method": "MERGE",
+      "If-Match": payload.etag
+    }
+    const config = {
+      headers: headers
+    }
+    const itemprops = {
+      __metadata: { type: "SP.Data.WorkPlansListItem" },
+      Archived: true
     }
 
     try {
       await axios.post(url, itemprops, config)
-      // go get the data for the saved item to return back to the user
-      return axios
-        .get(url, {
-          headers: {
-            accept: "application/json;odata=verbose"
-          }
-        })
-        .then(function(response) {
-          return response
-        })
+      return true
     } catch (error) {
-      console.log("WorkplanService Error Updating Workplan: " + error)
+      console.log("Workplan Model Error Archiving Workplan: " + error)
     }
   }
   //#endregion ACTIONS
 
   //#region FUNCTIONS
-  public formatDropdown(j: any) {
-    let p = []
-    for (let i = 0; i < j.length; i++) {
-      const value = j[i]["Number"] + ", " + j[i]["Title"] + ", " + j[i]["Revision"] + ", " + j[i]["LastIndex"] + ", " + j[i]["__metadata"]["uri"] + ", " + j[i]["__metadata"]["etag"]
-      p.push({
-        text: j[i]["Number"] + " " + j[i]["Title"],
-        value: j[i]["Number"],
-        data: value
-      })
-    }
-    p = Vue._.orderBy(p, "value", "asc")
-    return p
-  }
 
-  public formatManagers(j: any) {
-    const p = []
-    for (let i = 0; i < j.length; i++) {
-      p.push({
-        text: j[i]["Title"],
-        value: j[i]["Id"]
-      })
-    }
-    return p
-  }
   //#endregion FUNCTIONS
 }
 export default WorkPlan

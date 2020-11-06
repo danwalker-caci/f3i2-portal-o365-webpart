@@ -15,7 +15,7 @@
         </div>
       </template>
     </b-sidebar>
-    <div class="main-panel" :class="isShown === true ? ' sidebarOpen' : 'sidebarClosed'">
+    <div class="main-panel" :class="isShown === true ? 'sidebarOpen' : 'sidebarClosed'">
       <Header />
       <Content />
       <Footer />
@@ -24,11 +24,9 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Component, Prop, Vue } from "vue-property-decorator"
+import { Component, Vue } from "vue-property-decorator"
 import { namespace } from "vuex-class"
 import { Notification } from "@/interfaces/Notification"
-import { User } from "@/interfaces/User"
 import Header from "./Header.vue"
 import Footer from "./Footer.vue"
 import Content from "./Content.vue"
@@ -67,18 +65,13 @@ export default class Layout extends Vue {
       message: "F3I2 Portal Loaded."
     }
     this.add(notification)
-    console.log("LAYOUT MOUNTED")
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .sidebarOpen {
-  margin-left: 310px !important;
-}
-
-.main-panel .sidebarOpen {
-  width: calc(100vw - 310px);
+  margin-left: 320px !important;
 }
 
 .sidebarClosed {

@@ -1,6 +1,6 @@
 <template>
-  <b-container fluid class="contentHeight">
-    <b-row class="contentHeight">
+  <b-container fluid class="contentHeight m-0 p-0">
+    <b-row no-gutters class="contentHeight">
       <b-toast id="busy-toast" variant="warning" solid no-auto-hide>
         <template v-slot:toast-title>
           <div class="d-flex flex-grow-1 align-items-baseline">
@@ -11,14 +11,15 @@
         <b-spinner style="width: 7rem; height: 7rem;" variant="success" label="Waiting Spinner"></b-spinner>
       </b-toast>
       <b-col cols="12" class="m-0 p-0">
-        <b-container fluid class="contentHeight">
-          <b-row class="buttonrow">
+        <b-container fluid class="contentHeight m-0 p-0">
+          <b-row no-gutters class="buttonrow">
             <b-button id="ShowFilters" class="btn btn-warning" @click="ToggleFilters">
               Toggle Filters
             </b-button>
           </b-row>
-          <b-row class="gridrow">
+          <b-row no-gutters class="gridrow">
             <ejs-grid
+              v-if="loaded"
               id="WorkplanGrid"
               ref="WorkplanGrid"
               :dataSource="filteredworkplans"
@@ -48,6 +49,7 @@
                 <e-column field="DateApproved" headerText="Date Approved" textAlign="Left" width="150"></e-column>
                 <e-column field="Id" headerText="Id" :visible="false" textAlign="Left" width="40" :isPrimaryKey="true"></e-column>
                 <e-column field="ManagerEmail" :visible="false" textAlign="Left" width="40"></e-column>
+                <e-column field="ManagerId" :visible="false" textAlign="Left" width="40"></e-column>
                 <e-column field="uri" :visible="false" textAlign="Left" width="40"></e-column>
                 <e-column field="etag" :visible="false" textAlign="Left" width="40"></e-column>
               </e-columns>
@@ -72,8 +74,35 @@
                       <td><input class="e-input" type="text" v-model="rowData.Revision" /></td>
                       <td><ejs-datepicker v-model="rowData.POPStart"></ejs-datepicker></td>
                       <td><ejs-datepicker v-model="rowData.POPEnd"></ejs-datepicker></td>
-                      <td><ejs-dropdownlist id="ddManagerEdit" v-model="rowData.Manager" :dataSource="managers" :fields="ddfields" @change="EditManagerSelected"></ejs-dropdownlist></td>
+                      <td><ejs-dropdownlist id="ddManagerEdit" v-model="rowData.Manager" :dataSource="managers" :fields="ddfields"></ejs-dropdownlist></td>
                       <td><ejs-datepicker v-model="rowData.DateApproved"></ejs-datepicker></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </b-container>
+            </b-modal>
+            <b-modal id="NewModal" ref="NewModal" size="xl" centered @ok="newOk">
+              <template v-slot:modal-title>Add New Work Plan</template>
+              <b-container fluid>
+                <table id="NewTable" class="workplantable">
+                  <tbody>
+                    <tr class="bg-warning text-white">
+                      <th>Title</th>
+                      <th>Number</th>
+                      <th>Revision</th>
+                      <th>POP Start</th>
+                      <th>POP End</th>
+                      <th>Manager</th>
+                      <th>Date Approved</th>
+                    </tr>
+                    <tr>
+                      <td class="px300"><input class="e-input" type="text" v-model="newData.Title" /></td>
+                      <td><input class="e-input" type="text" v-model="newData.Number" /></td>
+                      <td><input class="e-input" type="text" v-model="newData.Revision" /></td>
+                      <td><ejs-datepicker v-model="newData.POPStart"></ejs-datepicker></td>
+                      <td><ejs-datepicker v-model="newData.POPEnd"></ejs-datepicker></td>
+                      <td><ejs-dropdownlist id="ddManagerNew" v-model="newData.Manager" :dataSource="managers" :fields="ddfields"></ejs-dropdownlist></td>
+                      <td><ejs-datepicker v-model="newData.DateApproved"></ejs-datepicker></td>
                     </tr>
                   </tbody>
                 </table>
@@ -88,6 +117,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, Vue, Ref } from "vue-property-decorator"
 import { namespace } from "vuex-class"
 import { User } from "@/interfaces/User"
@@ -109,20 +139,50 @@ let vm: any = null
   }
 })
 export default class Workplan extends Vue {
+  public loaded?: boolean = false
+
   @users.State
   public currentUser!: User
 
-  @workplan.State
-  public workplans!: Array<WorkPlanItem>
+  /* @workplan.State
+  public workplans!: Array<WorkPlanItem> */
 
-  @workplan.State
-  public filteredworkplans!: Array<WorkPlanItem>
+  /* @workplan.State
+  public filteredworkplans!: Array<WorkPlanItem> */
 
   @workplan.Action
   public getDigest!: () => Promise<boolean>
 
   @workplan.Action
   public getManagers!: () => Promise<boolean>
+
+  @workplan.Action
+  public editWorkplan!: (payload: any) => Promise<boolean>
+
+  @workplan.Action
+  public newWorkplan!: (payload: any) => Promise<boolean>
+
+  @workplan.Action
+  public getWorkplans!: () => Promise<boolean>
+
+  @workplan.Action
+  public archive!: (payload: any) => Promise<boolean>
+
+  get Digest() {
+    return this.$store.state.workplan.digest
+  }
+
+  get Loaded() {
+    return this.$store.state.workplan.loaded
+  }
+
+  get workplans() {
+    return this.$store.state.workplan.workplans
+  }
+
+  get filteredworkplans() {
+    return this.$store.state.workplan.filteredworkplans
+  }
 
   get isSubcontractor() {
     return this.$store.state.users.currentUser.isSubcontractor
@@ -135,12 +195,20 @@ export default class Workplan extends Vue {
   @Ref("WorkplanGrid") readonly WorkplanGrid!: GridComponent
 
   mounted() {
+    console.log("ACTIVE WORKPLANS MOUNTED")
     vm = this
     this.getDigest()
-    this.getManagers()
+    this.getManagers().then(response => {
+      this.getWorkplans().then(response => {
+        vm.loaded = true
+      })
+    })
   }
 
+  public ddfields?: any = { text: "text", value: "value" }
+  public manager?: any | null
   public rowData?: any = {}
+  public newData?: any = {}
   public busyTitle?: string = "Getting Data. Please Wait."
   public pageSettings?: any = { pageSize: 30 }
   public editSettings: any = {
@@ -198,11 +266,9 @@ export default class Workplan extends Vue {
                     uri: data.uri,
                     id: data.Id
                   }
-                  /* Workplan.dispatch("archive", payload).then(function() {
-                    Workplan.dispatch("getWorkplans").then(function() {
-                      vm.$options.interval = setInterval(vm.waitForPlans, 1000)
-                    })
-                  }) */
+                  vm.archive(payload).then((response: any) => {
+                    vm.$router.push({ name: "Refresh", params: { action: "activeworkplans" } })
+                  })
                 }
               })
               .catch(err => {
@@ -250,7 +316,7 @@ export default class Workplan extends Vue {
     }
     if (args.requestType == "refresh") {
       let h1 = 0
-      const h2 = (this.$refs["WorkplanGrid"] as GridComponent).$el.children[7].children[0].clientHeight // children[7] matches .e-gridconent
+      const h2 = (this.$refs["WorkplanGrid"] as GridComponent).$el.children[7].children[0].clientHeight // children[7] matches .e-gridcontent
       h1 = Math.floor(h2 / 20)
       this.pageSettings = { pageSize: h1 }
     }
@@ -259,10 +325,22 @@ export default class Workplan extends Vue {
   public dataBound() {
     ;(this.$refs["WorkplanGrid"] as GridComponent).autoFitColumns()
     let h1 = 0
-    const h2 = (this.$refs["WorkplanGrid"] as GridComponent).$el.children[7].children[0].clientHeight // children[7] matches .e-gridconent
+    const h2 = (this.$refs["WorkplanGrid"] as GridComponent).$el.children[7].children[0].clientHeight // children[7] matches .e-gridcontent
     h1 = Math.floor(h2 / 20)
     this.pageSettings = { pageSize: h1 }
   }
+
+  /* public EditManagerSelected() {
+    const s = String(this.rowData.Manager)
+    const t = this.managers.filter((manager: { text: string }) => manager.text == s)
+    this.rowData.ManagerId = t[0].value
+  }
+
+  public NewManagerSelected() {
+    const s = String(this.newData.Manager)
+    const t = this.managers.filter((manager: { text: string }) => manager.text == s)
+    this.newData.ManagerId = t[0].value
+  } */
 
   public editRow(data: any) {
     this.rowData = data
@@ -271,8 +349,16 @@ export default class Workplan extends Vue {
 
   public editOk(bvEvent: any) {
     bvEvent.preventDefault()
-    this.$store.dispatch("workplan/editWorkplan", this.rowData).then(function() {
-      // reload the component by refreshing the route
+    this.editWorkplan(this.rowData).then(response => {
+      console.log("editWorkplan Completed: " + response)
+      vm.$router.push({ name: "Refresh", params: { action: "activeworkplans" } })
+    })
+  }
+
+  public newOk() {
+    this.newWorkplan(this.newData).then(response => {
+      console.log("newWorkplan Completed: " + response)
+      vm.$router.push({ name: "Refresh", params: { action: "activeworkplans" } })
     })
   }
 }

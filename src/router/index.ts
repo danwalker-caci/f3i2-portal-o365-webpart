@@ -91,6 +91,19 @@ const routes: Array<RouteConfig> = [
         props: true
       }
     ]
+  },
+  {
+    path: "/refresh",
+    component: Layout,
+    redirect: "/refresh/home",
+    children: [
+      {
+        path: "home/:action",
+        name: "Refresh",
+        component: () => import(/* webpackChunkName: "refresh" */ "../components/Layout/Refresh.vue"),
+        props: true
+      }
+    ]
   }
 ]
 

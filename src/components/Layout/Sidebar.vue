@@ -3,7 +3,7 @@
     <div class="sidebar-wrapper">
       <ul class="nav">
         <li class="nav-item nav-header">
-          <b-link class="nav-link sidebar-menu-item" :href="homepage">
+          <b-link class="nav-link" :href="homepage">
             <span class="sidebar-icon">
               <font-awesome-icon fas icon="fighter-jet" class="icon"></font-awesome-icon>
             </span>
@@ -15,7 +15,7 @@
         <UserMenu />
         <li v-for="(link, index) in sidebaritems" :key="link.name + index" :link="link" class="nav-item" :to="link.path ? link.path : '/'">
           <template v-if="link.children.length > 0">
-            <a v-b-toggle="'menu' + link.id" class="nav-link sidebar-menu-item">
+            <a v-b-toggle="'menu' + link.id" class="nav-link">
               <span class="sidebar-icon">
                 <font-awesome-icon v-if="link.library === 'fas'" fas :icon="link.icon" class="icon"></font-awesome-icon>
                 <font-awesome-icon v-else-if="link.library === 'far'" far :icon="link.icon" class="icon"></font-awesome-icon>
@@ -24,6 +24,7 @@
                 {{ link.name }}
                 <span v-if="link.badgeId && link.badgeId.length > 0" :id="link.badgeId" class="badge badge-xs badge-danger sidebar-badge">0</span>
               </span>
+              <b class="caret"></b>
             </a>
             <b-collapse :id="'menu' + link.id" accordion="sidebar-accordion" role="tabpanel" class="ml-3">
               <ul class="nav">

@@ -12,6 +12,8 @@ const idurl = baseUrl + "/_api/Web/CurrentUser?$select=Id"
 class Users extends VuexModule {
   public loaded?: boolean = false
   public currentUser!: User
+  public taskCount?: number = 0
+  public tasks?: Array<any> = []
 
   @Mutation
   public updateLoaded(loaded: boolean): void {

@@ -6,7 +6,7 @@
       </span>
       <span class="sidebar-text">
         {{ CurrentUser.DisplayName }}
-        <span class="badge badge-xs badge-danger sidebar-badge">0</span>
+        <span class="badge badge-xs badge-danger sidebar-badge">{{ taskCount }}</span>
       </span>
     </a>
     <b-collapse id="menu0" accordion="sidebar-accordion" role="tabpanel" class="ml-3">
@@ -16,17 +16,15 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, Vue } from "vue-property-decorator"
-import { namespace } from "vuex-class"
 import { User } from "@/interfaces/User"
-
-const users = namespace("users")
 
 @Component({
   name: "UserMenu"
 })
 export default class UserMenu extends Vue {
+  public taskCount?: number = 0
+
   get CurrentUser(): User {
     return this.$store.state.users.currentUser
   }
