@@ -6,7 +6,7 @@
       </span>
       <span class="sidebar-text">
         {{ CurrentUser.DisplayName }}
-        <span class="badge badge-xs badge-danger sidebar-badge">{{ taskCount }}</span>
+        <span class="badge badge-xs badge-danger sidebar-badge">{{ todoCount }}</span>
       </span>
     </a>
     <b-collapse id="menu0" accordion="sidebar-accordion" role="tabpanel" class="ml-3">
@@ -23,7 +23,9 @@ import { User } from "@/interfaces/User"
   name: "UserMenu"
 })
 export default class UserMenu extends Vue {
-  public taskCount?: number = 0
+  get todoCount(): number {
+    return this.$store.state.users.todos.length
+  }
 
   get CurrentUser(): User {
     return this.$store.state.users.currentUser

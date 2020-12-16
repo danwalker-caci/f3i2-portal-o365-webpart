@@ -1,6 +1,8 @@
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators"
 import { User } from "@/interfaces/User"
+import { TodoItem } from "@/interfaces/TodoItem"
 import axios from "axios"
+import moment from "moment"
 
 declare const _spPageContextInfo: any
 
@@ -12,8 +14,18 @@ const idurl = baseUrl + "/_api/Web/CurrentUser?$select=Id"
 class Users extends VuexModule {
   public loaded?: boolean = false
   public currentUser!: User
-  public taskCount?: number = 0
-  public tasks?: Array<any> = []
+  public todoCount?: number
+  public todos?: Array<TodoItem> = []
+
+  @Mutation
+  public updateTodos(todos: Array<any>): void {
+    this.todos = todos
+  }
+
+  @Mutation
+  public updateCount(count: number): void {
+    this.todoCount = count
+  }
 
   @Mutation
   public updateLoaded(loaded: boolean): void {
@@ -54,6 +66,56 @@ class Users extends VuexModule {
     this.currentUser.isAdmin = data.isAdmin === true ? true : false
     this.currentUser.isAFRL = data.isAFRL === true ? true : false
     this.currentUser.isAFRLCEU = data.isAFRLCEU === true ? true : false
+  }
+
+  @Action
+  public async getTodosByUser(): Promise<boolean> {
+    this.context.commit("updateCount", 0)
+    let allTodos: any[] = []
+    const p: Array<TodoItem> = []
+    const userid: number = this.currentUser.userid
+    async function getAllTodos(turl: string): Promise<void> {
+      if (turl === "") {
+        turl = baseUrl + "/_api/lists/getbytitle('Tasks')/items?"
+        turl += "$select=*,AssignedTo/Id&$expand=AssignedTo/Id"
+        turl += "&$filter=(AssignedTo/Id eq " + userid + ") and (Status ne 'Completed')"
+      }
+      const response = await axios.get(turl, {
+        headers: {
+          accept: "application/json;odata=verbose"
+        }
+      })
+      const results = response.data.d.results
+      allTodos = allTodos.concat(results)
+      if (response.data.d.__next) {
+        turl = response.data.d.__next
+        return getAllTodos(turl)
+      } else {
+        // Use the results
+        const j = allTodos
+        for (let i = 0; i < j.length; i++) {
+          p.push({
+            Id: Number(j[i]["Id"]),
+            Title: j[i]["Title"], // This is the Title column in SharePoint
+            Status: j[i]["Status"],
+            StartDate: moment(j[i]["StartDate"]).isValid() ? moment(j[i]["StartDate"]).format("MM/DD/YYYY") : "",
+            DueDate: moment(j[i]["DueDate"]).isValid() ? moment(j[i]["DueDate"]).format("MM/DD/YYYY") : "",
+            TaskType: j[i]["TaskType"],
+            AssignedTo: {
+              Title: j[i]["AssignedTo"]["Title"],
+              Id: j[i]["AssignedTo"]["ID"],
+              Email: j[i]["AssignedTo"]["EMail"]
+            },
+            etag: j[i]["__metadata"]["etag"],
+            uri: j[i]["__metadata"]["uri"]
+          })
+        }
+      }
+    }
+    getAllTodos("")
+    this.context.commit("updateTodos", p)
+    // this.context.commit("updateCount", p.length)
+    return true
   }
 
   @Action

@@ -23,5 +23,15 @@ module.exports = {
 
   filenameHashing: true,
   runtimeCompiler: true,
-  productionSourceMap: false
+  productionSourceMap: false,
+
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
+          $BACKGROUNDCOLOR: ${process.env.APP_BACKGROUND};
+        `
+      }
+    }
+  }
 }

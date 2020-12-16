@@ -31,6 +31,9 @@ export default class App extends Vue {
   @users.Action
   public getUserPermissions!: (id: number) => Promise<User>
 
+  @users.Action
+  public getTodosByUser!: () => Promise<boolean>
+
   @workplan.Action
   public getWorkplans!: () => Promise<boolean>
 
@@ -41,17 +44,21 @@ export default class App extends Vue {
         if (response === true) {
           this.getUserPermissions(this.userid).then(response => {
             if (response) {
-              this.getWorkplans().then(response => {
+              this.getTodosByUser().then(response => {
                 if (response) {
-                  // TODO: Get Personnel and Companies
-                } else {
-                  const notification: Notification = {
-                    id: 0,
-                    type: "danger",
-                    title: "Error",
-                    message: "Could not load Workplans."
-                  }
-                  this.add(notification)
+                  this.getWorkplans().then(response => {
+                    if (response) {
+                      // TODO: Get Personnel and Companies
+                    } else {
+                      const notification: Notification = {
+                        id: 0,
+                        type: "danger",
+                        title: "Error",
+                        message: "Could not load Workplans."
+                      }
+                      this.add(notification)
+                    }
+                  })
                 }
               })
             } else {

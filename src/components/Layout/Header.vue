@@ -10,9 +10,6 @@
         </b-container>
       </b-modal> -->
       <div class="navbar-minimize">
-        <!-- <button class="btn btn-outline btn-fill btn-round btn-icon d-none d-lg-block btn-burger" :class="isShown === true ? ' sidebarOpen' : 'sidebarClosed'" @click.prevent="toggler">
-          <font-awesome-icon fas :icon="isShown === true ? 'ellipsis-v' : 'bars'" class="icon"></font-awesome-icon>
-        </button> -->
         <button class="btn btn-outline btn-fill btn-round btn-icon d-none d-lg-block btn-burger" @click.prevent="toggler">
           <font-awesome-icon fas :icon="isShown === true ? 'ellipsis-v' : 'bars'" class="icon"></font-awesome-icon>
         </button>
@@ -45,7 +42,7 @@
               </b-tbody>
             </b-table-simple>
           </b-nav-item-dropdown> -->
-          <b-nav-item-dropdown id="SettingsMenu" right no-caret menu-class="animated bounceInDown">
+          <b-nav-item-dropdown v-if="isDeveloper" id="SettingsMenu" right no-caret menu-class="animated bounceInDown">
             <template slot="button-content">
               <font-awesome-icon fas icon="cog" class="cog"></font-awesome-icon>
             </template>
@@ -85,12 +82,12 @@
                 <span>Site settings</span>
               </div>
             </b-dropdown-item>
-            <b-dropdown-item href="#" @click="ShowActivityLog">
+            <!-- <b-dropdown-item href="#" @click="ShowActivityLog">
               <div class="row">
                 <font-awesome-icon fas icon="clipboard-list" class="icon"></font-awesome-icon>
                 <span>Show Activity Log</span>
               </div>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </div>

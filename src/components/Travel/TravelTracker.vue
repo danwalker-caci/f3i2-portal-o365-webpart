@@ -5,8 +5,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 
-@Component
+@Component({
+  name: "TravelTracker"
+})
 export default class TravelTracker extends Vue {}
 </script>
 
-<style scoped></style>
+<style></style>

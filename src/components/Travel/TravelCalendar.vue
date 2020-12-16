@@ -5,8 +5,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 
-@Component
-export default class Personnel extends Vue {}
+@Component({
+  name: "TravelCalendar"
+})
+export default class TravelCalendar extends Vue {}
 </script>
 
-<style scoped></style>
+<style></style>

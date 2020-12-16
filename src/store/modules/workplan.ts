@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Vue from "vue"
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators"
 import { WorkPlanItem } from "@/interfaces/WorkPlanItem"
 import axios from "axios"
@@ -189,9 +188,6 @@ class WorkPlan extends VuexModule {
       Title: payload.Title,
       Number: payload.Number,
       Revision: payload.Revision,
-      //POPStart: payload.POPStart !== undefined || payload.POPStart !== "" ? new Date(payload.POPStart) : null,
-      //POPEnd: payload.POPEnd !== undefined || payload.POPEnd !== "" ? new Date(payload.POPEnd) : null,
-      //DateApproved: payload.DateApproved !== undefined || payload.DateApproved !== "" ? new Date(payload.DateApproved) : null,
       ManagerId: Number(payload.Manager),
       POPStart: moment(payload.POPStart).isValid()
         ? moment(payload.POPStart)
@@ -208,7 +204,6 @@ class WorkPlan extends VuexModule {
             .add(6, "hours")
             .format("YYYY-MM-DD[T]HH:MM:[00Z]")
         : null
-      // ManagerId: Number(payload.ManagerId)
     }
 
     try {
@@ -238,9 +233,6 @@ class WorkPlan extends VuexModule {
       Title: payload.Title,
       Number: payload.Number,
       Revision: payload.Revision,
-      //POPStart: payload.POPStart !== undefined || payload.POPStart !== "" ? new Date(payload.POPStart) : null,
-      //POPEnd: payload.POPEnd !== undefined || payload.POPEnd !== "" ? new Date(payload.POPEnd) : null,
-      //DateApproved: payload.DateApproved !== undefined || payload.DateApproved !== "" ? new Date(payload.DateApproved) : null,
       ManagerId: Number(payload.Manager),
       POPStart: moment(payload.POPStart).isValid()
         ? moment(payload.POPStart)
@@ -257,7 +249,6 @@ class WorkPlan extends VuexModule {
             .add(6, "hours")
             .format("YYYY-MM-DD[T]HH:MM:[00Z]")
         : null
-      // ManagerId: Number(payload.ManagerId)
     }
 
     try {

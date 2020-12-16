@@ -49,7 +49,7 @@ class Sidebar extends VuexModule {
         },
         {
           id: 202,
-          name: "Reports",
+          name: "Roster",
           path: "/personnel/home/reports/default",
           library: "fas",
           icon: "id-card"
@@ -73,6 +73,39 @@ class Sidebar extends VuexModule {
       ],
       library: "fas",
       icon: "ruler-combined"
+    },
+    {
+      id: 400,
+      isMenu: true,
+      name: "Financial",
+      path: "/financial/home",
+      children: [
+        {
+          id: 401,
+          name: "Dashboard",
+          path: "/financial/home",
+          library: "fas",
+          icon: "file-invoice"
+        },
+        {
+          id: 402,
+          name: "Documents",
+          path: "/financial/library",
+          library: "fas",
+          icon: "book"
+        },
+        {
+          id: 403,
+          name: "Manning Report",
+          path: "/financial/manning",
+          library: "fas",
+          icon: "pusers"
+        }
+      ],
+      library: "fas",
+      icon: "money-check-alt",
+      permission: "isAdmin",
+      permissionvalue: true
     },
     {
       id: 1000,

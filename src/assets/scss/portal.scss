@@ -1,5 +1,4 @@
 @import "./animate.scss";
-/* @import "./themify-icons.scss"; */
 @import "spa/functions";
 @import "spa/variables";
 @import "spa/mixins";
@@ -64,10 +63,6 @@ $input-box-border-color: $black; // override syncfusion input border color
 @import 'node_modules/@syncfusion/ej2-schedule/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-kanban/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-spreadsheet/styles/bootstrap4.scss';
-
-/* #app {
-  border: 2px solid purple;
-} */
 
 .hidden { display: none; }
 

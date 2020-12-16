@@ -5,8 +5,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 
-@Component
-export default class Manning extends Vue {}
+@Component({
+  name: "Roster"
+})
+export default class Roster extends Vue {}
 </script>
 
 <style scoped></style>

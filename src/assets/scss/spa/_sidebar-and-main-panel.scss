@@ -28,6 +28,30 @@ a[aria-controls~="menu"] .caret {
   transform: rotate(180deg);
 }
 
+.sidebar-tasks {
+  float: right;
+  width: 100px;
+  padding: 2px;
+  position: relative;
+  text-align: left;
+}
+
+.sidebar-badge {
+  border-radius: 50%;
+  font-size: .8rem !important;
+  width: 20px;
+  height: 20px;
+  float: right;
+  margin-top: 5px;
+}
+
+.loading-spinner {
+  width: 20px !important;
+  height: 20px !important;
+  float: right;
+  margin-right: 15px;
+}
+
 // THE SIDEBAR
 
 .sidebar{
@@ -107,7 +131,6 @@ a[aria-controls~="menu"] .caret {
     max-height: calc(100vh - 75px);
     min-height: 100%;
     overflow: auto;
-    /* width: 260px; */
     width: 320px;
     z-index: 4;
     padding-bottom: 100px;
@@ -213,21 +236,6 @@ a[aria-controls~="menu"] .caret {
    ~ .nav {
      margin-top: 15px;
    }
-    .photo{
-      width: 34px;
-      height: 34px;
-      overflow: hidden;
-      border-radius: 50%;
-      float: left;
-      margin-right: 11px;
-      margin-left: 15px;
-      z-index: 5;
-      border: 2px solid #e0ba0f;
-
-      img{
-        width: 100%;
-      }
-    }
     .info{
       .caret{
         right: 15px;
@@ -505,15 +513,15 @@ a[aria-controls~="menu"] .caret {
 
 
 .main-panel{
-  /* background: #ffffff; */
   position: relative;
   width: 100%;
 
   .content{
-    /* padding: 30px 15px; */
     height: calc(100vh - 100px);
-    overflow-y: auto;
-    background: transparent;
+    background: $BACKGROUNDCOLOR;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   /* .footer{
