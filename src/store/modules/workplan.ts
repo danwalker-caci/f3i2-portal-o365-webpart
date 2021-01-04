@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators"
 import { WorkPlanItem } from "@/interfaces/WorkPlanItem"
+import { FilterFieldItem } from "@/interfaces/FilterFieldItem"
 import axios from "axios"
 import moment from "moment"
 
@@ -23,6 +24,94 @@ class WorkPlan extends VuexModule {
   public subsloaded = false
   public workplans: Array<WorkPlanItem> = []
   public filteredworkplans: Array<WorkPlanItem> = []
+  public filterfields: Array<FilterFieldItem> = [
+    {
+      FieldName: "Status",
+      Visible: true,
+      DisplayName: "Status",
+      Filter: false,
+      Control: "DropdownBox",
+      DataType: "Choice",
+      DropdownSource: "status",
+      Selected: "S",
+      Predicate: "E",
+      FilterValue: "",
+      Sort: ""
+    },
+    {
+      FieldName: "Title",
+      Visible: true,
+      DisplayName: "Title",
+      Filter: false,
+      DataType: "Text",
+      Predicate: "S",
+      FilterValue: "",
+      Sort: ""
+    },
+    {
+      FieldName: "Number",
+      Visible: true,
+      DisplayName: "Number",
+      Filter: false,
+      DataType: "Text",
+      Predicate: "S",
+      FilterValue: "",
+      Sort: ""
+    },
+    {
+      FieldName: "Revision",
+      Visible: true,
+      DisplayName: "Revision",
+      Filter: false,
+      DataType: "Text",
+      Predicate: "S",
+      FilterValue: "",
+      Sort: ""
+    },
+    {
+      FieldName: "POPStart",
+      Visible: true,
+      DisplayName: "POP Start",
+      Filter: false,
+      DataType: "Date",
+      Predicate: "S",
+      FilterValue: "",
+      FilterValue2: "",
+      Sort: ""
+    },
+    {
+      FieldName: "POPEnd",
+      Visible: true,
+      DisplayName: "POPEnd",
+      Filter: false,
+      DataType: "Date",
+      Predicate: "S",
+      FilterValue: "",
+      FilterValue2: "",
+      Sort: ""
+    },
+    {
+      FieldName: "Manager",
+      Visible: true,
+      DisplayName: "Manager",
+      Filter: false,
+      DataType: "Text",
+      Predicate: "S",
+      FilterValue: "",
+      Sort: ""
+    },
+    {
+      FieldName: "DateApproved",
+      Visible: true,
+      DisplayName: "Date Approved",
+      Filter: false,
+      DataType: "Date",
+      Predicate: "S",
+      FilterValue: "",
+      FilterValue2: "",
+      Sort: ""
+    }
+  ]
   // #endregion STATE
 
   // #region  GETTERS
@@ -52,6 +141,10 @@ class WorkPlan extends VuexModule {
 
   get Digest() {
     return this.digest
+  }
+
+  get FilterFields() {
+    return this.filterfields
   }
   // #endregion GETTERS
 

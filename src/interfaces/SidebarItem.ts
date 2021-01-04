@@ -7,6 +7,8 @@ interface SidebarItem {
   children?: SidebarItem[]
   library?: string
   icon?: string
+  filtertype?: string
+  filtershown?: boolean
   permission?: string
   permissionvalue?: boolean
 }

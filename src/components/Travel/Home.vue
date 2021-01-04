@@ -4,37 +4,37 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: "Home",
   props: {
     mode: {
       type: String,
-      default: 'default'
+      default: "default"
     }
   },
   errorCaptured(err, vm, info) {
     const notification = {
-      type: 'danger',
-      title: 'Error in traveltracker.vue ' + err,
+      type: "danger",
+      title: "Error in traveltracker.vue " + err,
       message: info,
       push: false
     }
-    this.$store.dispatch('notification/add', notification, { root: true })
+    this.$store.dispatch("notification/add", notification, { root: true })
   },
   mounted: function() {
-    this.$store.dispatch('support/addActivity', '<div class="bg-info">TRAVEL HOME MOUNTED: ' + this.mode + '</div>')
+    this.$store.dispatch("support/addActivity", '<div class="bg-info">TRAVEL HOME MOUNTED: ' + this.mode + "</div>")
     // Get Travel. This will make sure that the latest travel items are available.
-    if (this.mode == 'refreshtracker') {
-      this.$router.push({ name: 'Travel Tracker' })
+    if (this.mode == "refreshtracker") {
+      this.$router.push({ name: "Travel Tracker" })
     }
-    if (this.mode == 'refreshcalendar') {
-      this.$router.push({ name: 'Travel Calendar' })
+    if (this.mode == "refreshcalendar") {
+      this.$router.push({ name: "Travel Calendar" })
     }
-    if (this.mode == 'new') {
-      this.$router.push({ name: 'New Travel', params: { back: 'Travel Tracker' } })
+    if (this.mode == "new") {
+      this.$router.push({ name: "New Travel", params: { back: "Travel Tracker" } })
     }
   },
   beforeDestroy() {
-    this.$store.dispatch('support/setLegendItems', [])
+    this.$store.dispatch("support/setLegendItems", [])
   }
 }
 </script>

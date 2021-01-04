@@ -308,7 +308,7 @@ a[aria-controls~="menu"] .caret {
       }
 
       .nav-link{
-        color: $white;
+        color: $white !important;
         margin: 0;
         opacity: 1;
         text-transform: uppercase;
@@ -367,6 +367,18 @@ a[aria-controls~="menu"] .caret {
 
       }
 
+      .nav-filter-item{
+        text-transform: none !important;
+        svg{
+          font-size: .75rem;
+          margin-right: 0.5rem;
+          width: .75rem;
+          text-align: center;
+          vertical-align: middle;
+          float: left;
+        }
+      }
+
       &:not(.collapse .nav-link):hover .nav-link{
         background: rgba(255,255,255,0.13);
         opacity: 1;
@@ -388,6 +400,35 @@ a[aria-controls~="menu"] .caret {
         }
       }
 
+    }
+
+    .nav-filter-item{
+      color: $white !important;
+      line-height: 1rem !important;
+      padding: .2rem !important;
+
+      .e-checkbox-wrapper{
+        .e-label{
+          color: $white !important;
+        }
+      }
+
+      .btn-secondary{
+        background-color: transparent !important;
+        border: none !important;
+      }
+
+      .form-control{
+        height: 24px;
+      }
+
+      .e-input-group .e-input-group-icon{
+        min-height: 0px !important;
+      }
+
+      .e-input{
+        height: 20px;
+      }
     }
 
   }

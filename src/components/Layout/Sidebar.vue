@@ -33,12 +33,14 @@
                     <span class="sidebar-icon">
                       <font-awesome-icon v-if="sublink.library === 'fas'" fas :icon="sublink.icon" class="icon"></font-awesome-icon>
                       <font-awesome-icon v-else-if="sublink.library === 'far'" far :icon="sublink.icon" class="icon"></font-awesome-icon>
+                      <font-awesome-icon v-if="sublink.filtertype && sublink.filtertype.length > 0" v-b-toggle="'filtermenu_' + sublink.filtertype" fas icon="filter" class="icon"></font-awesome-icon>
                     </span>
                     <span class="sidebar-text">
                       {{ sublink.name }}
                       <span v-if="sublink.badgeId && sublink.badgeId.length > 0" :id="sublink.badgeId" class="badge badge-xs badge-danger sidebar-badge">0</span>
                     </span>
                   </router-link>
+                  <GridFilter v-if="sublink.filtertype && sublink.filtertype.length > 0" :filtertype="sublink.filtertype"></GridFilter>
                 </li>
               </ul>
             </b-collapse>
@@ -66,6 +68,7 @@ import { Component, Prop, Vue } from "vue-property-decorator"
 import { namespace } from "vuex-class"
 import { User } from "@/interfaces/User"
 import { SidebarItem } from "@/interfaces/SidebarItem"
+import GridFilter from "./GridFilter.vue"
 import UserMenu from "./UserMenu.vue"
 
 const sidebar = namespace("sidebar")
@@ -74,10 +77,13 @@ const users = namespace("users")
 @Component({
   name: "Sidebar",
   components: {
-    UserMenu
+    UserMenu,
+    GridFilter
   }
 })
 export default class Sidebar extends Vue {
+  public Shown!: boolean
+
   @users.State
   public currentUser!: User
 

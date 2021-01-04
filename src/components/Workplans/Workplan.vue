@@ -12,11 +12,11 @@
       </b-toast>
       <b-col cols="12" class="m-0 p-0">
         <b-container fluid class="contentHeight m-0 p-0">
-          <b-row no-gutters class="buttonrow">
+          <!-- <b-row no-gutters class="buttonrow">
             <b-button id="ShowFilters" class="btn btn-warning" @click="ToggleFilters">
               Toggle Filters
             </b-button>
-          </b-row>
+          </b-row> -->
           <b-row no-gutters class="gridrow">
             <ejs-grid
               v-if="loaded"
@@ -119,6 +119,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, Vue, Ref } from "vue-property-decorator"
+import { bus } from "../../main"
 import { namespace } from "vuex-class"
 import { User } from "@/interfaces/User"
 import { Notification } from "@/interfaces/Notification"
@@ -193,6 +194,12 @@ export default class Workplan extends Vue {
   }
 
   @Ref("WorkplanGrid") readonly WorkplanGrid!: GridComponent
+
+  created() {
+    bus.$on("showhide", (data: any) => {
+      this.showorhide(data)
+    })
+  }
 
   mounted() {
     console.log("ACTIVE WORKPLANS MOUNTED")
@@ -361,6 +368,22 @@ export default class Workplan extends Vue {
       vm.$router.push({ name: "Refresh", params: { action: "activeworkplans" } })
     })
   }
+
+  public showorhide(e: any) {
+    console.log("SHOW OR HIDE: " + e)
+    const checked = e.checked
+    // var fieldname = e.event.target.value
+    const displayname = e.displayname
+    if (e.type == "workplan") {
+      if (checked) {
+        ;(this.$refs["WorkplanGrid"] as GridComponent).showColumns([displayname])
+        ;(this.$refs["WorkplanGrid"] as GridComponent).autoFitColumns()
+      } else {
+        ;(this.$refs["WorkplanGrid"] as GridComponent).hideColumns([displayname])
+        ;(this.$refs["WorkplanGrid"] as GridComponent).autoFitColumns()
+      }
+    }
+  }
 }
 </script>
 
@@ -369,6 +392,6 @@ export default class Workplan extends Vue {
   height: 50px;
 }
 .gridrow {
-  height: calc(100vh - 150px);
+  height: calc(100vh - 100px);
 }
 </style>

@@ -178,24 +178,23 @@ const routes: Array<RouteConfig> = [
   {
     path: "/personnel",
     component: Layout,
-    redirect: "/personnel/home",
     children: [
       {
-        path: "home/reports/:mode",
+        path: "roster",
         name: "Roster",
-        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/Personnel.vue"),
+        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/Roster.vue"),
         props: true
       },
       {
-        path: "home/refresh/:mode",
-        name: "Personnel",
-        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/Personnel.vue"),
+        path: "onboarding",
+        name: "OnBoarding",
+        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/OnBoarding.vue"),
         props: true
       },
       {
-        path: "home/new/:mode",
-        name: "Onboarding",
-        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/Personnel.vue"),
+        path: "offboarding",
+        name: "OffBoarding",
+        component: () => import(/* webpackChunkName: "personnel" */ "../components/Personnel/OffBoarding.vue"),
         props: true
       }
     ]

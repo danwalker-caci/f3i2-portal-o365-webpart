@@ -42,17 +42,26 @@ class Sidebar extends VuexModule {
       children: [
         {
           id: 201,
-          name: "Onboarding",
-          path: "/personnel/home/new/onboarding",
+          name: "Roster",
+          path: "/personnel/roster",
           library: "fas",
-          icon: "user-check"
+          icon: "user-check",
+          filtertype: "personnel",
+          filtershown: false
         },
         {
           id: 202,
-          name: "Roster",
-          path: "/personnel/home/reports/default",
+          name: "OnBoarding",
+          path: "/personnel/onboarding",
           library: "fas",
-          icon: "id-card"
+          icon: "user-plus"
+        },
+        {
+          id: 203,
+          name: "OffBoarding",
+          path: "/personnel/offboarding",
+          library: "fas",
+          icon: "user-minus"
         }
       ],
       library: "fas",
@@ -68,7 +77,9 @@ class Sidebar extends VuexModule {
           name: "Active Work Plans",
           path: "/workplans/home/active",
           library: "fas",
-          icon: "briefcase"
+          icon: "briefcase",
+          filtertype: "workplans",
+          filtershown: false
         }
       ],
       library: "fas",

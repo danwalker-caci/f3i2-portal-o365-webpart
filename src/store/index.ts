@@ -5,6 +5,7 @@ import users from "./modules/users"
 import support from "./modules/support"
 import sidebar from "./modules/sidebar"
 import workplan from "./modules/workplan"
+import personnel from "./modules/personnel"
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ const store = new Vuex.Store({
     notify,
     users,
     sidebar,
-    workplan
+    workplan,
+    personnel
   }
 })
 
