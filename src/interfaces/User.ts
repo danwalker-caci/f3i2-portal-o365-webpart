@@ -1,7 +1,9 @@
+import { ObjectItem } from "@/interfaces/ObjectItem"
 interface User {
   appversion?: string
   loaded?: boolean
   userid: number
+  recordid?: number
   usergroups?: []
   isPM?: boolean
   isSecurity?: boolean
@@ -30,5 +32,6 @@ interface User {
   About?: string
   Company?: string
   WPData?: string
+  JSONData?: Array<ObjectItem>
 }
 export { User }

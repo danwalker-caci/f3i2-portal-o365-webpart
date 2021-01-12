@@ -1,6 +1,6 @@
 interface ObjectItem {
   text: string
-  value: string
+  value: any
   index?: string
 }
 export { ObjectItem }

@@ -122,7 +122,7 @@ class Personnel extends VuexModule {
   public digest?: string = ""
   public loaded = false
   public dropdown: any = []
-  public allpersonnel: Array<PersonnelItem> = []
+  public personnel: Array<PersonnelItem> = []
   public filteredpersonnel: Array<PersonnelItem> = []
   public person: any = {} // would be assigned as a single PersonnelItem
   public companies: Array<ObjectItem> = []
@@ -372,7 +372,7 @@ class Personnel extends VuexModule {
 
   // #region  GETTERS
   get allPersonnel() {
-    return this.allpersonnel
+    return this.personnel
   }
 
   get DropDown() {
@@ -407,7 +407,7 @@ class Personnel extends VuexModule {
   @Mutation
   public updatePersonnel(personnel: Array<PersonnelItem>): void {
     console.log("MUTATION updatePersonnel called with: " + personnel.length + ", " + typeof personnel)
-    this.allpersonnel = personnel
+    this.personnel = personnel
   }
 
   @Mutation
@@ -445,7 +445,7 @@ class Personnel extends VuexModule {
     this.context.commit("updateCompanies", c) // ensure empty collection
     const that = this
     async function getAllPersonnel(purl: string): Promise<void> {
-      console.log("Personnel URL: " + purl)
+      // console.log("Personnel URL: " + purl)
       if (purl === "") {
         purl = geturl
       }
@@ -478,7 +478,7 @@ class Personnel extends VuexModule {
     this.context.commit("updateLoaded", false)
     let allFilteredPersonnel: any[] = []
     async function getAllFilteredPersonnel(purl: string): Promise<void> {
-      console.log("Personnel URL: " + purl)
+      // console.log("Personnel URL: " + purl)
       if (purl === "") {
         purl = payload.url
       }
@@ -503,6 +503,11 @@ class Personnel extends VuexModule {
     return true
   }
 
+  @Action
+  public async setFilteredPersonnel(personnel: any): Promise<boolean> {
+    this.context.commit("updatefilteredPersonnel", personnel)
+    return true
+  }
   @Action
   public async editPersonnel(payload: any) {
     url = payload.uri

@@ -1,6 +1,7 @@
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators"
 import { User } from "@/interfaces/User"
 import { TodoItem } from "@/interfaces/TodoItem"
+import { ObjectItem } from "@/interfaces/ObjectItem"
 import axios from "axios"
 import moment from "moment"
 
@@ -9,13 +10,21 @@ declare const _spPageContextInfo: any
 const baseUrl = _spPageContextInfo.webServerRelativeUrl
 const userurl = baseUrl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties"
 const idurl = baseUrl + "/_api/Web/CurrentUser?$select=Id"
+const personnelByIdUrl = baseUrl + "/_api/lists/getbytitle('Personnel')/items?$select=*,UserAccount/Title,UserAccount/Id&$expand=UserAccount&$filter=(UserAccount/Id eq "
+const upbidUrl = baseUrl + "/_api/lists/getbytitle('Personnel')/items("
 
 @Module({ namespaced: true })
 class Users extends VuexModule {
+  public digest?: string = ""
   public loaded?: boolean = false
   public currentUser!: User
   public todoCount?: number
   public todos?: Array<TodoItem> = []
+  public vm = this
+
+  @Mutation updateDigest(digest: string): void {
+    this.digest = digest
+  }
 
   @Mutation
   public updateTodos(todos: Array<any>): void {
@@ -39,6 +48,7 @@ class Users extends VuexModule {
 
   @Mutation
   public updateUserProfile(data: any): void {
+    this.currentUser.recordid = data.recordid // row id in personnel list not user id
     this.currentUser.Account = data.Account
     this.currentUser.Email = data.Email
     this.currentUser.EmailLink = data.EmailLink
@@ -48,6 +58,12 @@ class Users extends VuexModule {
     this.currentUser.Manager = data.Manager
     this.currentUser.FirstName = data.FirstName
     this.currentUser.LastName = data.LastName
+    this.currentUser.JSONData = data.JSONData
+  }
+
+  @Mutation
+  public updateUserJSONData(data: any): void {
+    this.currentUser.JSONData = data
   }
 
   @Mutation
@@ -66,6 +82,18 @@ class Users extends VuexModule {
     this.currentUser.isAdmin = data.isAdmin === true ? true : false
     this.currentUser.isAFRL = data.isAFRL === true ? true : false
     this.currentUser.isAFRLCEU = data.isAFRLCEU === true ? true : false
+  }
+
+  @Action
+  public async getDigest(): Promise<boolean> {
+    console.log("getDigest baseUrl: " + baseUrl)
+    const response = await axios.request({
+      url: baseUrl + "/_api/contextinfo",
+      method: "POST",
+      headers: { Accept: "application/json; odata=verbose" }
+    })
+    this.context.commit("updateDigest", response.data.d.GetContextWebInformation.FormDigestValue)
+    return true
   }
 
   @Action
@@ -135,7 +163,7 @@ class Users extends VuexModule {
 
   @Action
   public async getUserProfile(): Promise<boolean> {
-    const response = await axios.get(userurl, {
+    let response = await axios.get(userurl, {
       headers: {
         accept: "application/json;odata=verbose"
       }
@@ -170,8 +198,21 @@ class Users extends VuexModule {
           break
       }
     }
+    const url = personnelByIdUrl + this.currentUser.userid + ")"
+    response = await axios.get(url, {
+      headers: {
+        accept: "application/json;odata=verbose"
+      }
+    })
+    const results = response.data.d.results
+    profile.recordid = results[0].Id
+    if (results[0].JSONData && results[0].JSONData.length > 0) {
+      profile.JSONData = JSON.parse(results[0].JSONData) as Array<ObjectItem>
+    } else {
+      profile.JSONData = []
+    }
     this.context.commit("updateUserProfile", profile)
-    this.context.commit("updateUserName", profile.DisplayName)
+    // this.context.commit("updateUserName", profile.DisplayName)
     return true
   }
 
@@ -271,6 +312,28 @@ class Users extends VuexModule {
     this.context.commit("updateUserPermissions", permissions)
     this.context.commit("updateLoaded", true)
     return this.currentUser
+  }
+
+  @Action
+  public async updateJSONData(payload: any): Promise<boolean> {
+    // though this is the user module, some data is stored in the Personnel list and we update that information wherever needed.
+    // await this.getDigest()
+    const url = upbidUrl + this.currentUser.recordid + ")"
+    const headers = {
+      "Content-Type": "application/json;odata=verbose",
+      Accept: "application/json;odata=verbose",
+      "X-RequestDigest": this.digest,
+      "X-HTTP-Method": "MERGE",
+      "If-Match": "*"
+    }
+
+    const config = {
+      headers: headers
+    }
+
+    await axios.post(url, payload.itemprops, config)
+    this.context.commit("updateUserJSONData", payload.data)
+    return true
   }
 
   async getUserById(payload: any) {

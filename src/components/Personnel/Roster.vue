@@ -95,6 +95,7 @@ let vm: any = null
 })
 export default class Roster extends Vue {
   public loaded?: boolean = false
+  public filtereddata?: Array<PersonnelItem> = []
 
   @users.State
   public currentUser!: User
@@ -107,6 +108,9 @@ export default class Roster extends Vue {
 
   @personnel.Action
   public getPersonnel!: () => Promise<boolean>
+
+  @personnel.Action
+  public setFilteredPersonnel!: (payload: any) => Promise<boolean>
 
   get Digest() {
     return this.$store.state.personnel.digest
@@ -133,6 +137,9 @@ export default class Roster extends Vue {
   created() {
     bus.$on("showhide", (data: any) => {
       this.showorhide(data)
+    })
+    bus.$on("sortit", (data: any) => {
+      this.sortit(data)
     })
   }
 
@@ -219,6 +226,24 @@ export default class Roster extends Vue {
         ;(this.$refs["RosterGrid"] as GridComponent).autoFitColumns()
       }
     }
+  }
+
+  public sortit(e: any) {
+    let p = this.filteredpersonnel
+    if (e.datatype == "Date") {
+      p = Vue._.orderBy(
+        p,
+        function(o: any) {
+          return new vm.$moment(o[e.fieldname]).format("YYYYMMDD")
+        },
+        e.direction
+      )
+    } else {
+      p = Vue._.orderBy(p, e.fieldname, e.direction)
+    }
+    this.setFilteredPersonnel(p).then(function() {
+      ;(vm.$refs["RosterGrid"] as GridComponent).refresh()
+    })
   }
 }
 </script>
