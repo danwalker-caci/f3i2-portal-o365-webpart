@@ -5,114 +5,242 @@
 
 // Color system
 
-$white:    #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
-$black:    #000 !default;
+:root {
+  --white:    hsl(4,0%,100%);
+  --white-h: 4;
+  --white-s: 0%;
+  --white-l: 100%;
+  --gray-100: hsl(210,17%,98%);  /* Syncfusion uses this as the toolbar background. just using for testing before finding a better override */
+  --gray-100-h: 210;
+  --gray-100-s: 17%;
+  --gray-100-l: 98%;
+  --gray-200: hsl(210,16%,93%);
+  --gray-200-h: 210;
+  --gray-200-s: 16%;
+  --gray-200-l: 93%;
+  --gray-300: hsl(210,14%,89%);
+  --gray-300-h: 210;
+  --gray-300-s: 14%;
+  --gray-300-l: 89%;
+  --gray-400: hsl(210,14%,83%);
+  --gray-400-h: 210;
+  --gray-400-s: 14%;
+  --gray-400-l: 83%;
+  --gray-500: hsl(210,11%,71%);
+  --gray-500-h: 210;
+  --gray-500-s: 11%;
+  --gray-500-l: 71%;
+  --gray-600: hsl(208,7%,46%);
+  --gray-600-h: 207;
+  --gray-600-s: 7%;
+  --gray-600-l: 46%;
+  --gray-700: hsl(210,9%,31%);
+  --gray-700-h: 210;
+  --gray-700-s: 9%;
+  --gray-700-l: 31%;
+  --gray-800: hsl(210,10%,23%);
+  --gray-800-h: 210;
+  --gray-800-s: 10%;
+  --gray-800-l: 23%;
+  --gray-900: hsl(210,11%,15%);
+  --gray-900-h: 210;
+  --gray-900-s: 11%;
+  --gray-900-l: 15%;
+  --black:    hsl(4,0%,0%);
+  --black-h: 4;
+  --black-s: 0%;
+  --black-l: 0%;
+  --blue:    hsl(211,100%,50%);
+  --blue-h: 211;
+  --blue-s: 100%;
+  --blue-l: 50%;
+  --indigo:  hsl(263,90%,51%);
+  --indigo-h: 263;
+  --indigo-s: 90%;
+  --indigo-l: 51%;
+  --purple:  hsl(261,51%,51%);
+  --purple-h: 261;
+  --purple-s: 51%;
+  --purple-l: 51%;
+  --pink:    hsl(332,79%,58%);
+  --pink-h: 332;
+  --pink-s: 79%;
+  --pink-l: 58%;
+  --red:     hsl(354,70%,54%);
+  --red-h: 354;
+  --red-s: 70%;
+  --red-l: 54%;
+  --orange:  hsl(27,98%,54%);
+  --orange-h: 27;
+  --orange-s: 98%;
+  --orange-l: 54%;
+  --yellow:  hsl(55,100%,51%);
+  --yellow-h: 55;
+  --yellow-s: 100%;
+  --yellow-l: 51%;
+  --green:   hsl(134,61%,41%);
+  --green-h: 134;
+  --green-s: 61%;
+  --green-l: 41%;
+  --teal:    hsl(162,73%,46%);
+  --teal-h: 162;
+  --teal-s: 73%;
+  --teal-l: 46%;
+  --cyan:    hsl(188,78%,41%);
+  --cyan-h: 188;
+  --cyan-s: 78%;
+  --cyan-l: 41%;
+  --azure:   hsl(200,98%,63%);
+  --azure-h: 200;
+  --azure-s: 98%;
+  --azure-l: 63%;
+  --primary: var(--blue);
+  --primary-h: var(--blue-h);
+  --primary-s: var(--blue-s);
+  --primary-l: var(--blue-l);
+  --secondary: var(--gray-800);
+  --secondary-h: var(--gray-800-h);
+  --secondary-s: var(--gray-800-s);
+  --secondary-l: var(--gray-800-l);
+  --success: var(--green);
+  --success-h: var(--green-h);
+  --success-s: var(--green-s);
+  --success-l: var(--green-l);
+  --info: var(--azure);
+  --info-h: var(--azure-h);
+  --info-s: var(--azure-s);
+  --info-l: var(--azure-l);
+  --warning: var(--orange);
+  --warning-h: var(--orange-h);
+  --warning-s: var(--orange-s);
+  --warning-l: var(--orange-l);
+  --danger: var(--red);
+  --danger-h: var(--red-h);
+  --danger-s: var(--red-s);
+  --danger-l: var(--red-l);
+  --light: var(--white);
+  --light-h: var(--white-h);
+  --light-s: var(--white-s);
+  --light-l: var(--white-l);
+  --dark: var(--black);
+  --dark-h: var(--black-h);
+  --dark-s: var(--black-s);
+  --dark-l: var(--black-l);
+  --nav-link-color: var(--white);
+  --nav-link-color-h: var(--white-h);
+  --nav-link-color-s: var(--white-s);
+  --nav-link-color-l: var(--white-l);
+  --nav-link-bg-color: var(--black);
+  --nav-link-bg-color-h: var(--black-h);
+  --nav-link-bg-color-s: var(--black-s);
+  --nav-link-bg-color-l: var(--black-l);
+  --nav-link-hover-color: var(--white);
+  --nav-link-hover-color-h: var(--white-h);
+  --nav-link-hover-color-s: var(--white-s);
+  --nav-link-hover-color-l: var(--white-l);
+  --nav-link-hover-bg-color: var(--orange);
+  --nav-link-hover-bg-color-h: var(--orange-h);
+  --nav-link-hover-bg-color-s: var(--orange-s);
+  --nav-link-hover-bg-color-l: var(--orange-l);
+  --tbar-default-bg: var(--orange);
+  --tbar-default-bg-h: var(--orange-h);
+  --tbar-default-bg-s: var(--orange-s);
+  --tbar-default-bg-l: var(--orange-l);
+  }
 
-$grays: () !default;
-// stylelint-disable-next-line scss/dollar-variable-default
-$grays: map-merge(
-  (
-    "100": $gray-100,
-    "200": $gray-200,
-    "300": $gray-300,
-    "400": $gray-400,
-    "500": $gray-500,
-    "600": $gray-600,
-    "700": $gray-700,
-    "800": $gray-800,
-    "900": $gray-900
-  ),
-  $grays
+$grays: (
+  "100": var(--gray-100),
+  "200": var(--gray-200),
+  "300": var(--gray-300),
+  "400": var(--gray-400),
+  "500": var(--gray-500),
+  "600": var(--gray-600),
+  "700": var(--gray-700),
+  "800": var(--gray-800),
+  "900": var(--gray-900)
 );
 
-$blue:    #007bff !default;
-$indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
-$pink:    #e83e8c !default;
-$red:     #dc3545 !default;
-$orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
-$green:   #28a745 !default;
-$teal:    #20c997 !default;
-$cyan:    #17a2b8 !default;
-$azure:   #45c0fd !default;
+$gray-100: var(--gray-100);
+$gray-200: var(--gray-200);
+$gray-300: var(--gray-300);
+$gray-400: var(--gray-400);
+$gray-500: var(--gray-500);
+$gray-600: var(--gray-600);
+$gray-700: var(--gray-700);
+$gray-800: var(--gray-800);
+$gray-900: var(--gray-900);
 
-$colors: () !default;
-// stylelint-disable-next-line scss/dollar-variable-default
-$colors: map-merge(
-  (
-    "blue":       $blue,
-    "indigo":     $indigo,
-    "purple":     $purple,
-    "pink":       $pink,
-    "red":        $red,
-    "orange":     $orange,
-    "yellow":     $yellow,
-    "green":      $green,
-    "teal":       $teal,
-    "cyan":       $cyan,
-    "azure":      $azure,
-    "white":      $white,
-    "gray":       $gray-600,
-    "gray-dark":  $gray-800,
-    "black":      $black
-  ),
-  $colors
+$black:   var(--black);
+$white:   var(--white);
+$blue:    var(--blue);
+$indigo:  var(--indigo);
+$purple:  var(--purple);
+$pink:    var(--pink);
+$red:     var(--red);
+$orange:  var(--orange);
+$yellow:  var(--yellow);
+$green:   var(--green);
+$teal:    var(--teal);
+$cyan:    var(--cyan);
+$azure:   var(--azure);
+
+$colors: (
+  "blue":       var(--blue),
+  "indigo":     var(--indigo),
+  "purple":     var(--purple),
+  "pink":       var(--pink),
+  "red":        var(--red),
+  "orange":     var(--orange),
+  "yellow":     var(--yellow),
+  "green":      var(--green),
+  "teal":       var(--teal),
+  "cyan":       var(--cyan),
+  "azure":      var(--azure),
+  "white":      var(--white),
+  "gray":       var(--gray-600),
+  "gray-dark":  var(--gray-800),
+  "black":      var(--black)
 );
 
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $orange !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $black !default;
+$primary:       var(--primary);
+$secondary:     var(--secondary);
+$success:       var(--success);
+$info:          var(--info);
+$warning:       var(--warning);
+$danger:        var(--danger);
+$light:         var(--light);
+$dark:          var(--dark);
 
-$theme-colors: () !default;
-
-$theme-colors: map-merge(
-  (
-    "primary":    $primary,
-    "secondary":  $secondary,
-    "success":    $success,
-    "info":       $info,
-    "warning":    $warning,
-    "danger":     $danger,
-    "light":      $light,
-    "dark":       $dark,
-    "blue":       $blue,
-    "indigo":     $indigo,
-    "purple":     $purple,
-    "pink":       $pink,
-    "red":        $red,
-    "orange":     $orange,
-    "yellow":     $yellow,
-    "green":      $green,
-    "teal":       $teal,
-    "cyan":       $cyan,
-    "azure":      $azure,
-    "white":      $white,
-    "gray":       $gray-600,
-    "gray-dark":  $gray-800,
-    "black":      $black
-  ),
-  $theme-colors
+$theme-colors: (
+  "primary":    var(--primary),
+  "secondary":  var(--secondary),
+  "success":    var(--success),
+  "info":       var(--info),
+  "warning":    var(--warning),
+  "danger":     var(--danger),
+  "light":      var(--light),
+  "dark":       var(--dark),
+  "blue":       var(--blue),
+  "indigo":     var(--indigo),
+  "purple":     var(--purple),
+  "pink":       var(--pink),
+  "red":        var(--red),
+  "orange":     var(--orange),
+  "yellow":     var(--yellow),
+  "green":      var(--green),
+  "teal":       var(--teal),
+  "cyan":       var(--cyan),
+  "azure":      var(--azure),
+  "white":      var(--white),
+  "gray":       var(--gray-600),
+  "gray-dark":  var(--gray-800),
+  "black":      var(--black)
 );
 
-$sidebar-width:               calc(100% - 300px) !default;
+$sidebar-width:               calc(100% - 315px) !default;
 $none:                        0   !default;
 $font-size:                   16px !default;
-$default-color:               $black !default;
+$default-color:               var(--black);
 $navbar-padding-a:               10px 15px;
 $navbar-margin-a:                10px  3px;
 $padding-social-a:               10px  5px;
@@ -170,8 +298,10 @@ $theme-color-interval:      8% !default;
 $yiq-contrasted-threshold:  150 !default;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
-$yiq-text-dark:             $gray-900 !default;
-$yiq-text-light:            $white !default;
+/* $yiq-text-dark:             $gray-900 !default;
+$yiq-text-light:            $white !default; */
+$yiq-text-dark:             var(--black);
+$yiq-text-light:            var(--white);
 
 // Characters which are escaped by the escape-svg function
 $escaped-characters: (
@@ -188,7 +318,7 @@ $escaped-characters: (
 $enable-caret:                                true !default;
 $enable-rounded:                              true !default;
 $enable-shadows:                              false !default;
-$enable-gradients:                            false !default;
+$enable-gradients:                            true !default;
 $enable-transitions:                          true !default;
 $enable-prefers-reduced-motion-media-query:   true !default;
 $enable-hover-media-query:                    false !default; // Deprecated, no longer affects any compiled CSS
@@ -982,6 +1112,7 @@ $toast-padding-y:                   .25rem !default;
 $toast-font-size:                   .875rem !default;
 $toast-color:                       null !default;
 $toast-background-color:            rgba($white, .85) !default;
+$b-toast-background-opacity:        .85 !default;
 $toast-border-width:                1px !default;
 $toast-border-color:                rgba(0, 0, 0, .1) !default;
 $toast-border-radius:               .25rem !default;

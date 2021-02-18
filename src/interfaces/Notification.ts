@@ -1,5 +1,5 @@
 interface Notification {
-  id: number
+  id: any
   type: string
   title: string
   message: string

@@ -1,7 +1,8 @@
 @import "./animate.scss";
 @import "spa/functions";
-@import "spa/variables";
 @import "spa/mixins";
+@import "spa/functions-overrides";
+@import "spa/variables";
 
 /* set the overriding variables */
 $grid-breakpoints: (
@@ -31,21 +32,12 @@ $container-max-widths: (
   xxxxxl: 3840px
 );
 
-$enable-rounded: false;
-
-$grid-icon-color: $white;
-$tbar-default-bg: $warning;
-$tbar-hor-active-bg: $warning;
-$tbar-hover-bg: $black;
-$tbar-popup-hover-bg: $black;
-$tbar-default-icon-color: $white;
-$tbar-default-font: $white;
-
-$input-box-border-color: $black; // override syncfusion input border color
+$enable-rounded: true;
 
 /* override the default vars with the values we set above */
 @import 'spa/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
+/* @import './sfbs4.scss'; */
 @import 'node_modules/@syncfusion/ej2-base/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-buttons/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-calendars/styles/bootstrap4.scss';
@@ -62,11 +54,11 @@ $input-box-border-color: $black; // override syncfusion input border color
 @import 'node_modules/@syncfusion/ej2-gantt/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-schedule/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-kanban/styles/bootstrap4.scss';
-@import 'node_modules/@syncfusion/ej2-spreadsheet/styles/bootstrap4.scss';
+@import 'node_modules/@syncfusion/ej2-spreadsheet/styles/bootstrap4.scss'; 
 
 .hidden { display: none; }
 
-.contentHeight { height: calc(100vh - 100px) !important; }
+.contentHeight { height: calc(100vh - 150px) !important; }
 
 .btn-burger {
   height: 35px;
@@ -84,7 +76,12 @@ $input-box-border-color: $black; // override syncfusion input border color
   margin-top: 5px;
 }
 
-/* .btn-burger .icon { height: 18px; } */
+.mb-2,
+.my-2 {
+  margin-bottom: 0.25rem !important;
+}
+
+/* #region CUSTOM */
 
 .form-control-travel {
   border: 1px solid #000000; // set the same as ipgraylb
@@ -155,7 +152,7 @@ input[type=button], input[type=reset], input[type=submit], button {
 }
 
 #SettingsMenu .cog {
-  color: $white;
+  color: var(--white);
   font-size: 18px;
   width: 20px;
   margin: 4px;
@@ -174,12 +171,12 @@ input[type=button], input[type=reset], input[type=submit], button {
 
 #SettingsMenu li:hover {
   background-color: $black;
-  color: $white !important;
+  color: var(--white) !important;
 }
 
 #SettingsMenu li:hover > .dropdown-item {
   background-color: $black !important;
-  color: $white !important;
+  color: var(--white) !important;
 }
 
 #SettingsMenu .row {
@@ -195,7 +192,7 @@ input[type=button], input[type=reset], input[type=submit], button {
 
 #TasksMenu .dropdown-menu {
   width: 300px;
-  background-color: $white !important;
+  background-color: var(--white) !important;
 }
 
 #TasksMenu li:hover > .dropdown-item {
@@ -204,180 +201,183 @@ input[type=button], input[type=reset], input[type=submit], button {
   color: #000000;
 }
 
-  /*============================================================================================= CUSTOM BOOTSTRAP OVERRIDES ====================================================================================*/
+.smallbutton {
+  padding: 0.1rem !important;
+  line-height: 1;
+  min-width: 1em;
+  font-size: 0.5rem !important;
+}
 
-  .smallbutton {
-    padding: 0.1rem !important;
-    line-height: 1;
-    min-width: 1em;
-    font-size: 0.5rem !important;
-  }
-  
-  .actionbutton {
-    padding: 0.1rem !important;
-    line-height: 1;
-    min-width: 1em;
-    font-size: .75rem !important;
-  }
+.actionbutton {
+  padding: 0.1rem !important;
+  line-height: 1;
+  min-width: 1em;
+  font-size: .75rem !important;
+}
+/* #endregion CUSTOM */
 
-  .mb-2,
-  .my-2 {
-    margin-bottom: 0.25rem !important;
-  }
-  
-  // static width styles
-  .px10 {
-    width: 10px;
-  }
-  .px20 {
-    width: 20px;
-  }
-  .px30 {
-    width: 30px;
-  }
-  .px40 {
-    width: 40px;
-  }
-  .px50 {
-    width: 50px;
-  }
-  .px60 {
-    width: 60px;
-  }
-  .px70 {
-    width: 70px;
-  }
-  .px80 {
-    width: 80px;
-  }
-  .px90 {
-    width: 90px;
-  }
-  .px100 {
-    width: 100px;
-  }
-  .px110 {
-    width: 110px;
-  }
-  .px120 {
-    width: 120px;
-  }
-  .px130 {
-    width: 130px;
-  }
-  .px140 {
-    width: 140px;
-  }
-  .px150 {
-    width: 150px;
-  }
-  .px160 {
-    width: 160px;
-  }
-  .px170 {
-    width: 170px;
-  }
-  .px180 {
-    width: 180px;
-  }
-  .px190 {
-    width: 190px;
-  }
-  .px200 {
-    width: 200px;
-  }
-  .px210 {
-    width: 210px;
-  }
-  .px220 {
-    width: 220px;
-  }
-  .px230 {
-    width: 230px;
-  }
-  .px240 {
-    width: 240px;
-  }
-  .px250 {
-    width: 250px;
-  }
-  .px260 {
-    width: 260px;
-  }
-  .px270 {
-    width: 270px;
-  }
-  .px280 {
-    width: 280px;
-  }
-  .px290 {
-    width: 290px;
-  }
-  .px300 {
-    width: 300px;
-  }
-  
-  .pw10 {
-    width: 10%;
-  }
-  .pw20 {
-    width: 20%;
-  }
-  .pw30 {
-    width: 30%;
-  }
-  .pw40 {
-    width: 40%;
-  }
-  .pw50 {
-    width: 50%;
-  }
-  .pw60 {
-    width: 60%;
-  }
-  .pw70 {
-    width: 70%;
-  }
-  .pw80 {
-    width: 80%;
-  }
-  .pw90 {
-    width: 90%;
-  }
-  .pw100 {
-    width: 100%;
-  }
-  .mb5px {
-    margin-bottom: 5px;
-  }
+/* #region SPACING */
 
-  .py10 {
-    height: 10px;
-  }
-  .py20 {
-    height: 20px;
-  }
-  .py30 {
-    height: 30px;
-  }
-  .py40 {
-    height: 40px;
-  }
-  .py50 {
-    height: 50px;
-  }
-  .py60 {
-    height: 60px;
-  }
-  .py70 {
-    height: 70px;
-  }
-  .py80 {
-    height: 80px;
-  }
-  .py90 {
-    height: 90px;
-  }
-  .py100 {
-    height: 100px;
-  }
+.px10 {
+  width: 10px;
+}
+.px20 {
+  width: 20px;
+}
+.px30 {
+  width: 30px;
+}
+.px40 {
+  width: 40px;
+}
+.px50 {
+  width: 50px;
+}
+.px60 {
+  width: 60px;
+}
+.px70 {
+  width: 70px;
+}
+.px80 {
+  width: 80px;
+}
+.px90 {
+  width: 90px;
+}
+.px100 {
+  width: 100px;
+}
+.px110 {
+  width: 110px;
+}
+.px120 {
+  width: 120px;
+}
+.px130 {
+  width: 130px;
+}
+.px140 {
+  width: 140px;
+}
+.px150 {
+  width: 150px;
+}
+.px160 {
+  width: 160px;
+}
+.px170 {
+  width: 170px;
+}
+.px180 {
+  width: 180px;
+}
+.px190 {
+  width: 190px;
+}
+.px200 {
+  width: 200px;
+}
+.px210 {
+  width: 210px;
+}
+.px220 {
+  width: 220px;
+}
+.px230 {
+  width: 230px;
+}
+.px240 {
+  width: 240px;
+}
+.px250 {
+  width: 250px;
+}
+.px260 {
+  width: 260px;
+}
+.px270 {
+  width: 270px;
+}
+.px280 {
+  width: 280px;
+}
+.px290 {
+  width: 290px;
+}
+.px300 {
+  width: 300px;
+}
+
+.pw10 {
+  width: 10%;
+}
+.pw20 {
+  width: 20%;
+}
+.pw30 {
+  width: 30%;
+}
+.pw40 {
+  width: 40%;
+}
+.pw50 {
+  width: 50%;
+}
+.pw60 {
+  width: 60%;
+}
+.pw70 {
+  width: 70%;
+}
+.pw80 {
+  width: 80%;
+}
+.pw90 {
+  width: 90%;
+}
+.pw100 {
+  width: 100%;
+}
+.mb5px {
+  margin-bottom: 5px;
+}
+
+.py10 {
+  height: 10px;
+}
+.py20 {
+  height: 20px;
+}
+.py30 {
+  height: 30px;
+}
+.py40 {
+  height: 40px;
+}
+.py50 {
+  height: 50px;
+}
+.py60 {
+  height: 60px;
+}
+.py70 {
+  height: 70px;
+}
+.py80 {
+  height: 80px;
+}
+.py90 {
+  height: 90px;
+}
+.py100 {
+  height: 100px;
+}
+
+/* #endregion SPACING */
+
+/* #region CSS VARIABLE OVERRIDES FOR THEMING */
+.e-ribbon .e-tab .e-content .e-toolbar, .e-toolbar .e-toolbar-items, .e-toolbar {
+  background: var(--tbar-default-bg);
+}
+/* #endregion */

@@ -1,14 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg ">
+    <ThemeSelector />
     <div class="container-fluid">
-      <!-- <b-modal id="ActivityLog" ref="ActivityLog" size="xl" centered :header-bg-variant="warning" @close="onModalHide" v-model="Show">
-        <template v-slot:modal-title>Activity Log</template>
-        <b-container fluid class="p-0">
-          <div class="row m-0">
-            <div class="col-12 p-0 activity" v-html="activity"></div>
-          </div>
-        </b-container>
-      </b-modal> -->
       <div class="navbar-minimize">
         <button class="btn btn-outline btn-fill btn-round btn-icon d-none d-lg-block btn-burger" @click.prevent="toggler">
           <font-awesome-icon fas :icon="isShown === true ? 'ellipsis-v' : 'bars'" class="icon"></font-awesome-icon>
@@ -42,7 +35,7 @@
               </b-tbody>
             </b-table-simple>
           </b-nav-item-dropdown> -->
-          <b-nav-item-dropdown v-if="isDeveloper" id="SettingsMenu" right no-caret menu-class="animated bounceInDown">
+          <b-nav-item-dropdown id="SettingsMenu" right no-caret menu-class="animated bounceInDown">
             <template slot="button-content">
               <font-awesome-icon fas icon="cog" class="cog"></font-awesome-icon>
             </template>
@@ -88,6 +81,12 @@
                 <span>Show Activity Log</span>
               </div>
             </b-dropdown-item> -->
+            <b-dropdown-item v-if="isDeveloper" href="#" @click.prevent="ShowThemeSelector">
+              <div class="row">
+                <font-awesome-icon fas icon="palette" class="icon"></font-awesome-icon>
+                <span>Theme Selector</span>
+              </div>
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </div>
@@ -96,22 +95,41 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Component, Prop, Vue } from "vue-property-decorator"
+import { Component, Vue } from "vue-property-decorator"
+import ThemeSelector from "./ThemeSelector.vue"
 import { namespace } from "vuex-class"
 
 const support = namespace("support")
 
-@Component
+@Component({
+  name: "Header",
+  components: {
+    ThemeSelector
+  }
+})
 export default class Header extends Vue {
+  get isDeveloper() {
+    return this.$store.state.users.currentUser.isDeveloper
+  }
+
   @support.State
   public isShown!: boolean
 
   @support.Action
   public setShown!: (newVal: boolean) => void
 
+  @support.State
+  public isThemeSelectorShown!: boolean
+
+  @support.Action
+  public setThemeSelectorShown!: (newVal: boolean) => void
+
   toggler() {
     this.setShown(!this.isShown)
+  }
+
+  public ShowThemeSelector() {
+    this.setThemeSelectorShown(!this.isThemeSelectorShown)
   }
 
   public ShowActivityLog(): void {

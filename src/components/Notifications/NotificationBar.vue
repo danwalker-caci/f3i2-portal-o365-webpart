@@ -1,5 +1,5 @@
 <template>
-  <b-toast :variant="notification.type" solid append-toast auto-hide-delay="8000" visible>
+  <b-toast :variant="notification.type" solid append-toast auto-hide-delay="4000" visible>
     <template v-slot:toast-title>
       <div class="d-flex flex-grow-1 align-items-baseline">
         <strong class="mr-auto">{{ notification.title }}</strong>
@@ -26,7 +26,7 @@ export default class NotificationBar extends Vue {
   private timeout!: number
 
   mounted() {
-    this.timeout = setTimeout(() => this.remove(this.notification), 6000)
+    this.timeout = setTimeout(() => this.remove(this.notification), 1000)
   }
 
   beforeDestroy() {

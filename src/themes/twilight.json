@@ -1,0 +1,11 @@
+{
+  "bsPrimary": "#007bff",
+  "bsSecondary": "#6c757d",
+  "bsSuccess": "#42f572",
+  "bsInfo": " #42f5ce",
+  "bsWarning": "#8acceb",
+  "bsDanger": "#dc3545",
+  "bsLight": "#ffffff",
+  "bsDark": "#dddddd",
+  "sfToolbarBackground": "#8acceb"
+}

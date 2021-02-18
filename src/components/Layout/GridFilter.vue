@@ -1,7 +1,6 @@
 <template>
   <b-collapse :id="'filtermenu_' + filtertype" accordion="sidebar-subaccordion" role="tabpanel" class="ml-4" @shown="onShown">
-    <ul class="nav">
-      <!-- <li class="nav-item">{{ filtertype }} FILTER HERE</li> -->
+    <ul v-if="filterfields.length > 0" class="nav">
       <li v-for="field in filterfields" :key="field" class="nav-link nav-filter-item">
         <div v-if="field.FieldName !== 'Version'">
           <ejs-checkbox :label="field.DisplayName" :checked="field.Visible" @change="showorhide" :value="field.FieldName"></ejs-checkbox>
@@ -293,7 +292,7 @@ export default class GridFilter extends Vue {
     // const fields = JSON.stringify(filterfields)
     const payload: any = {}
     // does the user have any settings yet?
-    const data: Array<ObjectItem> = [] // = this.currentUser.JSONData !== "" ? JSON.parse(this.currentUser.JSONData) as Array<ObjectItem>: []
+    const data: Array<ObjectItem> = []
     if (this.currentUser.JSONData !== undefined) {
       if (this.currentUser.JSONData.length > 0) {
         // the user has settings
@@ -361,7 +360,7 @@ export default class GridFilter extends Vue {
     }
   }
 
-  public async loadfilter() {}
+  // public async loadfilter() {}
 }
 </script>
 

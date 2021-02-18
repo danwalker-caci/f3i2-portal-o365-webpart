@@ -465,7 +465,7 @@ class Personnel extends VuexModule {
         c = getOptions(allPersonnel, "Company")
         that.context.commit("updateCompanies", c)
         that.context.commit("updatePersonnel", p)
-        that.context.commit("updatefilteredPersonnel", p) // initiall set flltered personnel as all personnel
+        that.context.commit("updatefilteredPersonnel", p) // initial set flltered personnel as all personnel
         that.context.commit("updateLoaded", true)
       }
     }
@@ -498,7 +498,7 @@ class Personnel extends VuexModule {
       }
     }
     getAllFilteredPersonnel("")
-    this.context.commit("updatefilteredPersonnel", allFilteredPersonnel) // initiall set flltered personnel as all personnel
+    this.context.commit("updatefilteredPersonnel", allFilteredPersonnel) // initial set flltered personnel as all personnel
     this.context.commit("updateLoaded", true)
     return true
   }

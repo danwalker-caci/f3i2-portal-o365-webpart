@@ -12,7 +12,8 @@
   font-size: $font-size;
   border-radius: 0;
   height: 50px;
-  background-color: rgba($black, 1.0);
+  /* background-color: rgba($black, 1.0); */
+  background-color: var(--dark);
 
   .navbar-brand {
     font-weight: 400;
@@ -21,7 +22,7 @@
     color: $white !important;
 
     &:hover{
-      color: #5e5e5e;
+      color: var(--warning);
     }
   }
 
@@ -131,7 +132,7 @@
       }
     }
 
-    .notification{
+    /* .notification{
       position: absolute;
       background-color: #FB404B;
       text-align: center;
@@ -145,7 +146,7 @@
       line-height: 18px;
       top: 10px;
       left: 7px;
-    }
+    } */
 
     .dropdown-toggle:after{
       display: inline-block;

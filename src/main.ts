@@ -5,6 +5,7 @@ import lodash from "lodash"
 import VueMoment from "vue-moment"
 import moment from "moment-timezone"
 import crono from "vue-crono"
+import { logger } from "./applogger"
 import { GanttPlugin } from "@syncfusion/ej2-vue-gantt"
 import { GridPlugin } from "@syncfusion/ej2-vue-grids"
 import { RichTextEditorPlugin } from "@syncfusion/ej2-vue-richtexteditor"
@@ -45,11 +46,26 @@ Vue.use(DropDownListPlugin)
 Vue.use(CheckBoxPlugin)
 Vue.use(SpreadsheetPlugin)
 
+export const bus = new Vue()
+Vue.config.errorHandler = (err, vm, info) => {
+  logger.logToServer({ err, vm, info })
+}
+
+window.onerror = function(message, source, lineno, colno, error) {
+  logger.logToServer({ message, source, lineno, colno, error })
+}
+
+window.addEventListener("beforeunload", function(e) {
+  if (String(window.location).indexOf("msr/form") > 0) {
+    bus.$emit("Unloading")
+    e.preventDefault()
+    e.returnValue = ""
+  }
+})
+
 Vue.config.productionTip = false
 
 Vue.config.devtools = true
-
-export const bus = new Vue()
 
 new Vue({
   router,

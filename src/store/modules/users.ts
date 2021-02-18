@@ -39,6 +39,7 @@ class Users extends VuexModule {
   @Mutation
   public updateLoaded(loaded: boolean): void {
     this.loaded = loaded
+    console.log("User Loaded")
   }
 
   @Mutation

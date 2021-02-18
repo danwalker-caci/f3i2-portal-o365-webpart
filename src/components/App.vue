@@ -6,7 +6,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import axios from "axios"
+import { Component, Watch, Vue } from "vue-property-decorator"
+import { Theme, ThemeName, ThemePropertiesDictionary } from "@/themes/theme.types"
 import { namespace } from "vuex-class"
 import { User } from "@/interfaces/User"
 import { Notification } from "@/interfaces/Notification"
@@ -15,9 +18,19 @@ const users = namespace("users")
 const notify = namespace("notify")
 const workplan = namespace("workplan")
 
+declare const _spPageContextInfo: any
+const baseUrl = _spPageContextInfo.webAbsoluteUrl
+const geturl = baseUrl + "/_api/web/getfolderbyserverrelativeurl('/sites/f3i2/siteassets/themes/standard')/Files('"
+
 @Component
 export default class App extends Vue {
+  public readonly $el!: HTMLElement
   public userid!: number
+
+  /** @property */
+  public get theme(): ThemeName {
+    return this.$store.state.support.theme
+  }
 
   @notify.Action
   public add!: (notification: Notification) => void
@@ -37,7 +50,8 @@ export default class App extends Vue {
   @workplan.Action
   public getWorkplans!: () => Promise<boolean>
 
-  created() {
+  /** @method - lifecycle hook */
+  public created(): void {
     this.getUserId().then(response => {
       this.userid = response.userid
       this.getUserProfile().then(response => {
@@ -46,19 +60,7 @@ export default class App extends Vue {
             if (response) {
               this.getTodosByUser().then(response => {
                 if (response) {
-                  this.getWorkplans().then(response => {
-                    if (response) {
-                      // TODO: Get Personnel and Companies
-                    } else {
-                      const notification: Notification = {
-                        id: 0,
-                        type: "danger",
-                        title: "Error",
-                        message: "Could not load Workplans."
-                      }
-                      this.add(notification)
-                    }
-                  })
+                  this.setTheme()
                 }
               })
             } else {
@@ -69,6 +71,35 @@ export default class App extends Vue {
           console.log("Error getting user profile.")
         }
       })
+    })
+  }
+
+  /** @method - watcher */
+  @Watch("theme")
+  public onThemeChange(): void {
+    this.setTheme()
+  }
+
+  /** @method */
+  public async setTheme(): Promise<void> {
+    console.log("GETTING THEME " + this.theme)
+    // load from document library
+    let turl = geturl + this.theme
+    turl += ".json')/$value"
+
+    const response = await axios.get(turl, {
+      headers: {
+        accept: "application/json;odata=verbose"
+      }
+    })
+
+    const r = response.data
+
+    Object.entries(ThemePropertiesDictionary).forEach(entry => {
+      const key = entry[0]
+      const property = entry[1]
+      // console.log("key: " + key + ", property: " + property + ", theme[key]: " + r[key])
+      this.$el.style.setProperty(property, r[key])
     })
   }
 }
@@ -90,5 +121,10 @@ export default class App extends Vue {
   width: 100%;
   height: 100vh;
   z-index: 1000 !important;
+}
+
+.wrapper {
+  width: 100vw;
+  height: calc(100vh - 50px);
 }
 </style>
