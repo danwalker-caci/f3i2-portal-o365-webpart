@@ -5,7 +5,7 @@ class Support extends VuexModule {
   public isShown?: boolean = true
   public isThemeSelectorShown?: boolean = false
   public theme: ThemeName = ThemeName.DEFAULT
-  public contentrect?: DOMRect
+  public contentrect!: DOMRect
 
   @Mutation
   public updateRect(newVal: DOMRect): void {

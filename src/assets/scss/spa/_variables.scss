@@ -10,7 +10,7 @@
   --white-h: 4;
   --white-s: 0%;
   --white-l: 100%;
-  --gray-100: hsl(210,17%,98%);  /* Syncfusion uses this as the toolbar background. just using for testing before finding a better override */
+  --gray-100: hsl(210,17%,98%);
   --gray-100-h: 210;
   --gray-100-s: 17%;
   --gray-100-l: 98%;
@@ -142,10 +142,34 @@
   --nav-link-hover-bg-color-h: var(--orange-h);
   --nav-link-hover-bg-color-s: var(--orange-s);
   --nav-link-hover-bg-color-l: var(--orange-l);
-  --tbar-default-bg: var(--orange);
-  --tbar-default-bg-h: var(--orange-h);
-  --tbar-default-bg-s: var(--orange-s);
-  --tbar-default-bg-l: var(--orange-l);
+  --toolbar-color: var(--white);
+  --toolbar-color-h: var(--white-h);
+  --toolbar-color-s: var(--white-s);
+  --toolbar-color-l: var(--white-l);
+  --toolbar-bg-color: var(--orange);
+  --toolbar-bg-color-h: var(--orange-h);
+  --toolbar-bg-color-s: var(--orange-s);
+  --toolbar-bg-color-l: var(--orange-l);
+  --toolbar-btn-color: var(--white);
+  --toolbar-btn-color-h: var(--white-h);
+  --toolbar-btn-color-s: var(--white-s);
+  --toolbar-btn-color-l: var(--white-l);
+  --toolbar-btn-bg-color: var(--orange);
+  --toolbar-btn-bg-color-h: var(--orange-h);
+  --toolbar-btn-bg-color-s: var(--orange-s);
+  --toolbar-btn-bg-color-l: var(--orange-l);
+  --toolbar-btn-hover-color: var(--white);
+  --toolbar-btn-hover-color-h: var(--white-h);
+  --toolbar-btn-hover-color-s: var(--white-s);
+  --toolbar-btn-hover-color-l: var(--white-l);
+  --toolbar-btn-hover-bg-color: var(--black);
+  --toolbar-btn-hover-bg-color-h: var(--black-h);
+  --toolbar-btn-hover-bg-color-s: var(--black-s);
+  --toolbar-btn-hover-bg-color-l: var(--black-l);
+  --toolbar-btn-hover-border-color: var(--white);
+  --toolbar-btn-hover-border-color-h: var(--white-h);
+  --toolbar-btn-hover-border-color-s: var(--white-s);
+  --toolbar-btn-hover-border-color-l: var(--white-l);
   }
 
 $grays: (
@@ -316,9 +340,9 @@ $escaped-characters: (
 // Quickly modify global styling by enabling or disabling optional features.
 
 $enable-caret:                                true !default;
-$enable-rounded:                              true !default;
+$enable-rounded:                              false !default;
 $enable-shadows:                              false !default;
-$enable-gradients:                            true !default;
+$enable-gradients:                            false !default;
 $enable-transitions:                          true !default;
 $enable-prefers-reduced-motion-media-query:   true !default;
 $enable-hover-media-query:                    false !default; // Deprecated, no longer affects any compiled CSS

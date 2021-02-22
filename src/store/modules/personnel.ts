@@ -116,6 +116,7 @@ function getOptions(j: any, field: string): Array<ObjectItem> {
   return opts
 }
 //#endregion FUNCTIONS
+
 @Module({ namespaced: true })
 class Personnel extends VuexModule {
   // #region  STATE

@@ -50,7 +50,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 import { namespace } from "vuex-class"
-import { Notification } from "@/interfaces/Notification"
+// import { Notification } from "@/interfaces/Notification"
 import Header from "./Header.vue"
 import Footer from "./Footer.vue"
 import Content from "./Content.vue"
@@ -58,7 +58,7 @@ import Sidebar from "./Sidebar.vue"
 import NotificationContainer from "../Notifications/NotificationContainer.vue"
 
 const support = namespace("support")
-const notify = namespace("notify")
+// const notify = namespace("notify")
 const users = namespace("users")
 
 @Component({
@@ -81,12 +81,6 @@ export default class Layout extends Vue {
   @support.State
   public isShown!: boolean
 
-  @support.Action
-  public setRect!: (newVal: DOMRect) => void
-
-  @notify.Action
-  public add!: (notification: Notification) => void
-
   mounted() {
     this.interval = setInterval(this.waitforit, 1000)
   }
@@ -96,33 +90,12 @@ export default class Layout extends Vue {
     if (this.loaded) {
       clearInterval(this.interval)
       this.userloaded = true
-      const el = document.getElementById("maincontent")
-      if (el !== null) {
-        const rect = el.getBoundingClientRect()
-        console.log("CALCULATED CONTENT AREA: HEIGHT: " + rect?.height + ", WIDTH: " + rect?.width)
-        this.setRect(rect)
-      }
-      const notification: Notification = {
-        id: 0,
-        type: "success",
-        title: "Welcome!",
-        message: "F3I2 Portal Loaded."
-      }
-      this.add(notification)
     }
   }
 }
 </script>
 
 <style lang="scss">
-/* .sidebarOpen {
-  margin-left: 320px !important;
-}
-
-.sidebarClosed {
-  margin-left: 0px;
-} */
-
 .cui {
   height: 25px;
   line-height: 25px;

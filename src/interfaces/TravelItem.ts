@@ -6,15 +6,13 @@ interface TravelItem {
   OCONUS?: string
   OCONUSLocation?: string
   OCONUSApprovedBy?: string
-  OCONUSApprovedOn?: Date
+  OCONUSApprovedOn?: string
   OCONUSApprovedEmail?: string
-  StartTime?: Date
-  EndTime?: Date
-  class?: string
+  StartTime?: string
+  EndTime?: string
   WorkPlan?: string
   WorkPlanText?: string
   WorkPlanNumber?: string
-  OriginalWorkPlanNumber?: string
   Company?: string
   TravelFrom?: string
   TravelTo?: string
@@ -28,14 +26,14 @@ interface TravelItem {
   Clearance?: string
   VisitRequest?: string
   SecurityAction?: string
-  SecurityActionCompleted?: Date
+  SecurityActionCompleted?: string
   PreApproved?: string
   Approved?: string
   EstimatedCost?: number
   IndexNumber?: string
   TripReport?: string
   TripReportLink?: string
-  Created?: Date
+  Created?: string
   InternalData?: string
   etag?: string
   uri?: string

@@ -2,7 +2,7 @@
   <b-collapse :id="'filtermenu_' + filtertype" accordion="sidebar-subaccordion" role="tabpanel" class="ml-4" @shown="onShown">
     <ul v-if="filterfields.length > 0" class="nav">
       <li v-for="field in filterfields" :key="field" class="nav-link nav-filter-item">
-        <div v-if="field.FieldName !== 'Version'">
+        <div>
           <ejs-checkbox :label="field.DisplayName" :checked="field.Visible" @change="showorhide" :value="field.FieldName"></ejs-checkbox>
           <b-button size="sm" class="actionbutton float-right" :class="field.Filter ? null : 'collapsed'" :aria-expanded="field.Filter ? 'true' : 'false'" :aria-controls="getRef('collapse', field.FieldName)" @click="field.Filter = !field.Filter">
             <font-awesome-icon fas icon="filter" class="icon"></font-awesome-icon>
@@ -62,11 +62,13 @@ import { bus } from "../../main"
 import { User } from "@/interfaces/User"
 import { FilterFieldItem } from "@/interfaces/FilterFieldItem"
 import { ObjectItem } from "@/interfaces/ObjectItem"
-import { PersonnelItem } from "@/interfaces/PersonnelItem"
+/* import { PersonnelItem } from "@/interfaces/PersonnelItem"
 import { WorkPlanItem } from "@/interfaces/WorkPlanItem"
-import { filter } from "vue/types/umd"
+import { TravelItem } from "@/interfaces/TravelItem"
+import { filter } from "vue/types/umd" */
 
 const personnel = namespace("personnel")
+const travel = namespace("travel")
 const users = namespace("users")
 
 let vm: any = null
@@ -109,6 +111,9 @@ export default class GridFilter extends Vue {
   @personnel.Action
   public setFilteredPersonnel!: (payload: any) => Promise<boolean>
 
+  @travel.Action
+  public setFilteredTravel!: (payload: any) => Promise<boolean>
+
   @users.Action
   public getDigest!: () => Promise<boolean>
 
@@ -134,7 +139,12 @@ export default class GridFilter extends Vue {
       case "workplans":
         this.filterfields = this.$store.state.workplan.filterfields
         break
+
+      case "travel":
+        this.filterfields = this.$store.state.travel.filterfields
+        break
     }
+    console.log("FILTERFIELDS LOADED -- LENGTH: " + this.filterfields.length)
   }
 
   public showorhide(e: any) {
@@ -170,6 +180,10 @@ export default class GridFilter extends Vue {
 
       case "workplans":
         p = this.$store.state.workplan.workplans
+        break
+
+      case "travel":
+        p = this.$store.state.travel.travel
         break
     }
     for (let i = 0; i < filterfields.length; i++) {
@@ -260,6 +274,10 @@ export default class GridFilter extends Vue {
 
       case "workplans":
         // placeholder
+        break
+
+      case "travel":
+        vm.setFilteredTravel(p)
         break
     }
   }
@@ -356,6 +374,10 @@ export default class GridFilter extends Vue {
 
       case "workplans":
         this.filterfields = this.$store.state.workplan.filterfields
+        break
+
+      case "travel":
+        this.filterfields = this.$store.state.travel.filterfields
         break
     }
   }

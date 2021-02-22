@@ -22,7 +22,9 @@ class Sidebar extends VuexModule {
           name: "Travel Tracker",
           path: "/travel/home/refreshtracker",
           library: "fas",
-          icon: "subway"
+          icon: "subway",
+          filtertype: "travel",
+          filtershown: false
         },
         {
           id: 103,

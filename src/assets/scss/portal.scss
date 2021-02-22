@@ -49,12 +49,11 @@ $enable-rounded: true;
 @import 'node_modules/@syncfusion/ej2-splitbuttons/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-grids/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-richtexteditor/styles/bootstrap4.scss';
-@import 'node_modules/@syncfusion/ej2-treegrid/styles/bootstrap4.scss';
+// @import 'node_modules/@syncfusion/ej2-treegrid/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-dropdowns/styles/bootstrap4.scss';
-@import 'node_modules/@syncfusion/ej2-gantt/styles/bootstrap4.scss';
+// @import 'node_modules/@syncfusion/ej2-gantt/styles/bootstrap4.scss';
 @import 'node_modules/@syncfusion/ej2-schedule/styles/bootstrap4.scss';
-@import 'node_modules/@syncfusion/ej2-kanban/styles/bootstrap4.scss';
-@import 'node_modules/@syncfusion/ej2-spreadsheet/styles/bootstrap4.scss'; 
+// @import 'node_modules/@syncfusion/ej2-kanban/styles/bootstrap4.scss';
 
 .hidden { display: none; }
 
@@ -377,7 +376,28 @@ input[type=button], input[type=reset], input[type=submit], button {
 /* #endregion SPACING */
 
 /* #region CSS VARIABLE OVERRIDES FOR THEMING */
+.e-toolbar {
+  border-radius: 0px !important;
+}
+
 .e-ribbon .e-tab .e-content .e-toolbar, .e-toolbar .e-toolbar-items, .e-toolbar {
-  background: var(--tbar-default-bg);
+  background: var(--toolbar-bg-color);
+}
+
+.e-toolbar .e-tbar-btn {
+  background: var(--toolbar-btn-bg-color);
+  color: var(--toolbar-btn-color);
+}
+
+.e-toolbar .e-tbar-btn:hover {
+  background: var(--toolbar-btn-hover-bg-color);
+  border: 1px solid hsla(var(--toolbar-btn-hover-border-color-h),var(--toolbar-btn-hover-border-color-s),calc(var(--toolbar-btn-hover-border-color-l) - 10%),var(--toolbar-btn-hover-border-color-a,1));
+  border-color: hsla(var(--toolbar-btn-hover-border-color-h),var(--toolbar-btn-hover-border-color-s),calc(var(--toolbar-btn-hover-border-color-l) - 10%),var(--toolbar-btn-hover-border-color-a,1));
+  border-radius: 0px;
+  color: var(--toolbar-btn-hover-color);
+}
+
+.e-grid .e-icons {
+  color: var(--toolbar-btn-color);
 }
 /* #endregion */
