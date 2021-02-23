@@ -11,7 +11,6 @@ async function logToSharePoint(err: any) {
     headers: { Accept: "application/json; odata=verbose" }
   })
   const digest = response.data.d.GetContextWebInformation.FormDigestValue
-  console.log("DIGEST: " + digest)
   console.log("ERROR: " + err)
   const itemprops: any = {
     __metadata: { type: "SP.Data.ErrorLogListItem" }

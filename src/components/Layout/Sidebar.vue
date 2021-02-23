@@ -30,15 +30,27 @@
               <ul class="nav">
                 <li v-for="(sublink, index) in link.children" :key="sublink.name + index" :sublink="sublink" class="nav-item">
                   <router-link :to="sublink.path" class="nav-link">
-                    <span class="sidebar-icon">
-                      <font-awesome-icon v-if="sublink.library === 'fas'" fas :icon="sublink.icon" class="icon"></font-awesome-icon>
-                      <font-awesome-icon v-else-if="sublink.library === 'far'" far :icon="sublink.icon" class="icon"></font-awesome-icon>
-                      <font-awesome-icon v-if="sublink.filtertype && sublink.filtertype.length > 0" v-b-toggle="'filtermenu_' + sublink.filtertype" fas icon="filter" class="icon"></font-awesome-icon>
-                    </span>
-                    <span class="sidebar-text">
-                      {{ sublink.name }}
-                      <span v-if="sublink.badgeId && sublink.badgeId.length > 0" :id="sublink.badgeId" class="badge badge-xs badge-danger sidebar-badge">0</span>
-                    </span>
+                    <div class="container-fluid m-0 p-0">
+                      <div class="row no-gutters">
+                        <div class="col-1">
+                          <span class="sidebar-icon">
+                            <font-awesome-icon v-if="sublink.library === 'fas'" fas :icon="sublink.icon" class="icon"></font-awesome-icon>
+                            <font-awesome-icon v-else-if="sublink.library === 'far'" far :icon="sublink.icon" class="icon"></font-awesome-icon>
+                          </span>
+                        </div>
+                        <div class="col-10">
+                          <span class="sidebar-text">
+                            {{ sublink.name }}
+                          </span>
+                        </div>
+                        <div class="col-1">
+                          <span v-if="sublink.badgeId && sublink.badgeId.length > 0" :id="sublink.badgeId" class="badge badge-xs badge-danger sidebar-badge">0</span>
+                          <b-button v-if="sublink.filtertype && sublink.filtertype.length > 0" size="sm" class="actionbutton" v-b-toggle="'filtermenu_' + sublink.filtertype" @click.prevent="return launchfilter(sublink.filtertype)">
+                            <font-awesome-icon fas icon="filter" class="icon"></font-awesome-icon>
+                          </b-button>
+                        </div>
+                      </div>
+                    </div>
                   </router-link>
                   <GridFilter v-if="sublink.filtertype && sublink.filtertype.length > 0" :filtertype="sublink.filtertype"></GridFilter>
                 </li>
@@ -93,6 +105,11 @@ export default class Sidebar extends Vue {
 
   @sidebar.State
   public sidebaritems!: Array<SidebarItem>
+
+  public launchfilter(filtertype: string) {
+    console.log("FILTERING: " + filtertype)
+    return false
+  }
 }
 </script>
 

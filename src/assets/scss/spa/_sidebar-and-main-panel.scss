@@ -259,8 +259,8 @@ a[aria-controls~="menu"] .caret {
     display: block;
     top: 0;
     left: 0;
-    background-size: cover;
-    background-position: center center;
+    /* background-size: cover;
+    background-position: center center; */
   }
 
   .user{
@@ -437,7 +437,7 @@ a[aria-controls~="menu"] .caret {
 
     }
 
-    /* .nav-filter-item{
+    .nav-filter-item{
       color: $white !important;
       line-height: 1rem !important;
       padding: .2rem !important;
@@ -464,7 +464,7 @@ a[aria-controls~="menu"] .caret {
       .e-input{
         height: 20px;
       }
-    } */
+    }
 
   }
 

@@ -79,7 +79,7 @@ import { Notification } from "@/interfaces/Notification"
 import { PersonnelItem } from "@/interfaces/PersonnelItem"
 import { ClickEventArgs } from "@syncfusion/ej2-vue-navigations"
 import { GridComponent, EditSettings, ActionEventArgs } from "@syncfusion/ej2-vue-grids"
-import { Page, Edit, Toolbar, VirtualScroll, ExcelExport, DetailRow } from "@syncfusion/ej2-vue-grids"
+import { Page, Edit, Toolbar, Resize, Reorder, VirtualScroll, ExcelExport, DetailRow, Freeze } from "@syncfusion/ej2-vue-grids"
 
 const notify = namespace("notify")
 const users = namespace("users")
@@ -90,7 +90,7 @@ let vm: any = null
 @Component({
   name: "Roster",
   provide: {
-    grid: [Page, Edit, DetailRow, Toolbar, VirtualScroll, ExcelExport]
+    grid: [Page, Edit, Toolbar, Resize, Reorder, VirtualScroll, ExcelExport, DetailRow, Freeze]
   }
 })
 export default class Roster extends Vue {

@@ -1,7 +1,8 @@
 <template>
   <b-collapse :id="'filtermenu_' + filtertype" accordion="sidebar-subaccordion" role="tabpanel" class="ml-4" @shown="onShown">
-    <ul v-if="filterfields.length > 0" class="nav">
+    <ul v-if="ready" class="nav">
       <li v-for="field in filterfields" :key="field" class="nav-link nav-filter-item">
+        <!-- <div :style="randomstyle">{{ field.DisplayName }}</div> -->
         <div>
           <ejs-checkbox :label="field.DisplayName" :checked="field.Visible" @change="showorhide" :value="field.FieldName"></ejs-checkbox>
           <b-button size="sm" class="actionbutton float-right" :class="field.Filter ? null : 'collapsed'" :aria-expanded="field.Filter ? 'true' : 'false'" :aria-controls="getRef('collapse', field.FieldName)" @click="field.Filter = !field.Filter">
@@ -47,7 +48,7 @@
         <div class="full py30">
           <b-button size="sm" variant="danger" id="clearfilters" class="float-right ml-1" @click="clearfilters">Clear Filters</b-button>
           <b-button size="sm" variant="success" id="savefilters" class="float-right ml-1" @click="savefilters(filterfields)">Save Filters</b-button>
-          <b-button size="sm" variant="primary" :id="getRef('loadfilter', field.FieldName)" class="float-right" @click="loadfilter()">Filter</b-button>
+          <b-button size="sm" variant="primary" class="float-right" @click="loadfilter()">Filter</b-button>
         </div>
       </li>
     </ul>
@@ -56,16 +57,13 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Component, Prop, Vue, Ref } from "vue-property-decorator"
 import { namespace } from "vuex-class"
 import { bus } from "../../main"
 import { User } from "@/interfaces/User"
 import { FilterFieldItem } from "@/interfaces/FilterFieldItem"
 import { ObjectItem } from "@/interfaces/ObjectItem"
-/* import { PersonnelItem } from "@/interfaces/PersonnelItem"
-import { WorkPlanItem } from "@/interfaces/WorkPlanItem"
-import { TravelItem } from "@/interfaces/TravelItem"
-import { filter } from "vue/types/umd" */
 
 const personnel = namespace("personnel")
 const travel = namespace("travel")
@@ -79,6 +77,8 @@ let vm: any = null
 export default class GridFilter extends Vue {
   @Prop() filtertype!: string
   @Prop() shown!: boolean
+
+  public ready: boolean = false
 
   @users.State
   public currentUser!: User
@@ -114,18 +114,24 @@ export default class GridFilter extends Vue {
   @travel.Action
   public setFilteredTravel!: (payload: any) => Promise<boolean>
 
-  @users.Action
-  public getDigest!: () => Promise<boolean>
+  /* @users.Action
+  public getDigest!: () => Promise<boolean> */
 
   @users.Action
   public updateJSONData!: (payload: any) => Promise<boolean>
 
   mounted() {
     vm = this
+    console.log("GRIDFILTER MOUNTED: " + this.filtertype)
   }
 
   public getRef(text: any, idx: any) {
     return text + "_" + idx
+  }
+
+  public randomstyle() {
+    const style = "background: rgb('" + Math.random() * 250 + "', '" + Math.random() * 250 + "', '" + Math.random() * 250 + "')"
+    return style
   }
 
   public onShown() {
@@ -145,6 +151,9 @@ export default class GridFilter extends Vue {
         break
     }
     console.log("FILTERFIELDS LOADED -- LENGTH: " + this.filterfields.length)
+    if (this.filterfields.length > 0) {
+      this.ready = true
+    }
   }
 
   public showorhide(e: any) {
@@ -306,7 +315,8 @@ export default class GridFilter extends Vue {
   }
 
   public async savefilters(filterfields: Array<FilterFieldItem>) {
-    await this.getDigest()
+    console.log("SAVING USER FILTER")
+    // await this.getDigest()
     // const fields = JSON.stringify(filterfields)
     const payload: any = {}
     // does the user have any settings yet?

@@ -444,7 +444,7 @@ class Travel extends VuexModule {
       Sort: ""
     },
     {
-      FieldName: "POC Phone",
+      FieldName: "POCPhone",
       Visible: true,
       DisplayName: "POC Phone",
       Filter: false,
